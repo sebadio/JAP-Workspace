@@ -29,7 +29,7 @@ const validateEmail = (email) => {
   }
 };
 
-// Funcion que valida el email
+// Funcion que valida la contraseña
 const validatePassword = (password) => {
   // Checkeamos si hay una contraseña
   if (password.value && password.value !== "") {
