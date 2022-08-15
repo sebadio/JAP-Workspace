@@ -80,3 +80,37 @@ window.onload = () => {
     }
   });
 };
+
+function decodeGoogleResponse(respuesta) {
+  var base64Url = respuesta.split(".")[1];
+  var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+  var jsonPayload = decodeURIComponent(
+    window
+      .atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+
+  return JSON.parse(jsonPayload);
+}
+
+function handleGSignIn(respuesta) {
+  const data = decodeGoogleResponse(respuesta.credential);
+
+  const midCol = document.getElementById("midCol");
+  midCol.classList.add("flex-column");
+  midCol.classList.add("justify-content-center");
+  midCol.classList.add("align-items-center");
+
+  midCol.innerHTML = `
+  <h2>Bienvenido ${data.name}</h2>
+  <img src="${data.picture}" class="img-fluid rounded-circle">
+  <span>${data.email}</span>
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+`;
+}

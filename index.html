@@ -22,11 +22,13 @@
   </head>
 
   <body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
     <main class="mt-5">
       <div class="container">
         <div class="row">
           <div class="col-sm-4"></div>
-          <div class="col-sm-4 p-4">
+          <div id="midCol" class="col-sm-4 p-4">
             <div class="row">
               <img
                 class="img-fluid p-5"
@@ -69,6 +71,36 @@
               <button class="btn btn-primary btn-lg" id="loginButton">
                 Ingresar
               </button>
+            </div>
+            <hr class="border border-primary border-3 opacity-75" />
+            <div
+              class="row-4 d-flex justify-content-center p-2 flex-column align-items-center"
+            >
+              <span class="mb-4">O inicia sesión con Google:</span>
+
+              <div
+                id="g_id_onload"
+                data-client_id="259299083202-ar0uqp0troa1328ep5g11r76pmg3p6bg.apps.googleusercontent.com"
+                data-context="signin"
+                data-ux_mode="popup"
+                data-callback="handleGSignIn"
+                data-auto_prompt="false"
+              ></div>
+              <!-- data-login_uri="https://sebadio.github.io/JAP-Workspace/" -->
+
+              <div
+                class="g_id_signin"
+                data-type="standard"
+                data-shape="rectangular"
+                data-theme="filled_blue"
+                data-text="$ {button.text}"
+                data-size="large"
+                data-locale="es-419"
+                data-logo_alignment="left"
+              ></div>
+
+              <!--               
+              <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
             </div>
           </div>
           <div class="col-sm-4"></div>
