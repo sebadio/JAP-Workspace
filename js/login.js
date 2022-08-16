@@ -112,13 +112,9 @@ function handleGSignIn(respuesta) {
 
   midCol.innerHTML = `
     <h2 class="p-2">Iniciaste sesión con Google</h2>
-    <div class="card">
-      <img src="${data.picture}" class="img-fluid rounded-circle">
-      <div class="card-body">
-        <span>${data.name}</span>
-        <span>${data.email}</span>
-      </div>
-    </div>
+    <img src="${data.picture}" class="img-fluid rounded-circle">
+    <span>${data.name}</span>
+    <span>${data.email}</span>
     <span class="p-2">Estas siendo redireccionado por favor espere</span>
     <div class="spinner-border" role="status">
       <span class="visually-hidden">Loading...</span>
