@@ -56,6 +56,12 @@ const validatePassword = (password) => {
   }
 };
 
+const redirect = () => {
+  setInterval(() => {
+    location.href = "portada.html";
+  }, 1500);
+};
+
 // Window.onload espera a que la pagina cargue para ejecutar sus instrucciones
 window.onload = () => {
   // Creamos la constante boton y agregamos un eventListener para saber cuando clickea el usuario
@@ -74,9 +80,7 @@ window.onload = () => {
       boton.disabled = true;
       boton.innerHTML = "Redireccionando...";
 
-      setInterval(() => {
-        location.href = "portada.html";
-      }, 1500);
+      redirect();
     }
   });
 };
@@ -101,16 +105,25 @@ function handleGSignIn(respuesta) {
   const data = decodeGoogleResponse(respuesta.credential);
 
   const midCol = document.getElementById("midCol");
+  midCol.classList.add("d-flex");
   midCol.classList.add("flex-column");
   midCol.classList.add("justify-content-center");
   midCol.classList.add("align-items-center");
 
   midCol.innerHTML = `
-  <h2>Bienvenido ${data.name}</h2>
-  <img src="${data.picture}" class="img-fluid rounded-circle">
-  <span>${data.email}</span>
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-`;
+    <h2 class="p-2">Iniciaste sesión con Google</h2>
+    <div class="card">
+      <img src="${data.picture}" class="img-fluid rounded-circle">
+      <div class="card-body">
+        <span>${data.name}</span>
+        <span>${data.email}</span>
+      </div>
+    </div>
+    <span class="p-2">Estas siendo redireccionado por favor espere</span>
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  `;
+
+  redirect();
 }
