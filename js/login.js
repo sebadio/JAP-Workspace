@@ -111,7 +111,7 @@ function handleGSignIn(respuesta) {
   midCol.classList.add("align-items-center");
 
   midCol.innerHTML = `
-    <h2 class="w-100">Iniciaste sesión con Google</h2>
+    <h2 class="w-100 text-center">Iniciaste sesión con Google</h2>
     <img src="${data.picture}" class="img-fluid rounded-circle">
     <span>${data.name}</span>
     <span>${data.email}</span>
