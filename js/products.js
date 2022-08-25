@@ -5,6 +5,7 @@ window.onload = async () => {
 
   // Agarramos el div en el que se van a encontrar los productos:
   const container = document.getElementById("container");
+  const titulo = document.getElementById("title");
 
   // Hacemos el fetch de los productos y extraemos los productos
   const url = `https://japceibal.github.io/emercado-api/cats_products/${localStorage.getItem(
@@ -14,17 +15,17 @@ window.onload = async () => {
   const respuesta = await fetch(url);
   const datos = await respuesta.json();
 
-  console.log(datos);
-
   const { products } = datos;
 
-  // Modificamos el contenido del div para preparalo para los datos que vamos a recibir
-  container.innerHTML = `
-    <h2 class="fw-bold mt-4">Productos</h2>
-    <br>
-    <p>Aqui veras todos los productos de la categoria: ${datos.catName}</p>
-    <ul id="lista" class="list-group w-100"></ul>
+  // Modificamos el titulo para que muestre lo que queremos:
+
+  titulo.innerHTML = `
+    <h2>Productos</h2>
+    <p>Aqui veras todos los productos de la categoria ${datos.catName}</p>
   `;
+
+  // Modificamos el contenido del div para preparalo para los datos que vamos a recibir
+  container.innerHTML = `<ul id="lista" class="list-group w-100"></ul>`;
 
   // Agarramos la lista
   const lista = document.getElementById("lista");
