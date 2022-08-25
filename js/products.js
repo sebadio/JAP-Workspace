@@ -7,7 +7,9 @@ window.onload = async () => {
   const container = document.getElementById("container");
 
   // Hacemos el fetch de los productos y extraemos los productos
-  const url = `https://japceibal.github.io/emercado-api/cats_products/101.json`;
+  const url = `https://japceibal.github.io/emercado-api/cats_products/${localStorage.getItem(
+    "catID"
+  )}.json`;
 
   const respuesta = await fetch(url);
   const datos = await respuesta.json();

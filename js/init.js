@@ -54,9 +54,6 @@ const setUser = () => {
 
     const liItem = navbarUl.children[3];
 
-    console.log(navbarUl);
-    console.log(liItem);
-
     liItem.innerHTML = `<a class="nav-link" href="my-profile.html">${localStorage.getItem(
       "user"
     )}</a>`;
