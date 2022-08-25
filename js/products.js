@@ -1,6 +1,8 @@
 // Esperamos a que se carguen los elementos del DOM:
 
 window.onload = async () => {
+  setUser();
+
   // Agarramos el div en el que se van a encontrar los productos:
   const container = document.getElementById("container");
 

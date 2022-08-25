@@ -56,7 +56,9 @@ const validatePassword = (password) => {
   }
 };
 
-const redirect = () => {
+const redirect = (email, user = null) => {
+  localStorage.setItem("user", String(user ? user : email));
+
   setInterval(() => {
     location.href = "portada.html";
   }, 1500);
@@ -80,7 +82,7 @@ window.onload = () => {
       boton.disabled = true;
       boton.innerHTML = "Redireccionando...";
 
-      redirect();
+      redirect(emailInput.value);
     }
   });
 };
@@ -121,5 +123,5 @@ function handleGSignIn(respuesta) {
     </div>
   `;
 
-  redirect();
+  redirect(data.email, data.name);
 }
