@@ -110,4 +110,14 @@ window.onload = async () => {
   document.getElementById("clearRangeFilter").addEventListener("click", () => {
     poblarLista(initialArray);
   });
+
+  document.getElementById("searchInput").addEventListener("input", (e) => {
+    let input = document.getElementById("searchInput").value;
+
+    let array = products.filter((item) =>
+      item.name.toLowerCase().includes(input.toLowerCase())
+    );
+
+    poblarLista(array);
+  });
 };
