@@ -117,6 +117,7 @@ window.onload = async () => {
   });
 
   document.getElementById("clearRangeFilter").addEventListener("click", () => {
+    products = initialArray;
     poblarLista(initialArray);
   });
 
