@@ -41,6 +41,7 @@ const poblarLista = (products) => {
 
 // Inicializamos la variable desc para modificarla si es necesario
 let descCount = false;
+let descPrice = false;
 
 /* Funcion que ordena un array en base al tipo que se le de y lo envia al reves 
  si tiene que ser descendiente */
@@ -98,11 +99,11 @@ window.onload = async () => {
   document.getElementById("sortByCount").addEventListener("click", () => {
     // Cambiamos el icono para reflejar el cambio
     document.getElementById("sortValue").innerHTML = `
-      <i class="fas fa-sort-amount-${descCount ? "down" : "up"} mr-1"></i> $
+      <i class="fas fa-sort-amount-down${!descPrice ? "-alt" : ""} mr-1"></i> $
     `;
     // Ordenamos el array en base a la cantidad vendida (asc)
-    products = sorting(products, "cost", descCount);
-    descCount = !descCount;
+    products = sorting(products, "cost", descPrice);
+    descPrice = !descPrice;
     poblarLista(products);
   });
 
@@ -110,7 +111,9 @@ window.onload = async () => {
   document.getElementById("sortByRel").addEventListener("click", () => {
     // Cambiamos el icono para reflejar el cambio
     document.getElementById("sortRel").innerHTML = `
-      <i class="fas fa-sort-amount-${descCount ? "down" : "up"} mr-1"></i> Rel
+      <i class="fas fa-sort-amount-down${
+        !descCount ? "-alt" : ""
+      } mr-1"></i> Rel
     `;
     // Ordenamos el array en base a la cantidad vendida (desc)
     products = sorting(products, "soldCount", descCount);
