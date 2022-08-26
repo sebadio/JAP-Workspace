@@ -80,9 +80,19 @@
                 id="sortByCount"
                 checked
               />
-              <label class="btn btn-light" for="sortByCount"
-                ><i class="fas fa-sort-amount-down mr-1"></i
-              ></label>
+              <label class="btn btn-light" id="sortValue" for="sortByCount"
+                ><i class="fas fa-sort-amount-down mr-1"></i> $</label
+              >
+              <input
+                type="radio"
+                class="btn-check"
+                name="options"
+                id="sortByRel"
+                checked
+              />
+              <label class="btn btn-light" id="sortRel" for="sortByRel"
+                ><i class="fas fa-sort-amount-down mr-1"></i> Rel</label
+              >
             </div>
           </div>
         </div>
@@ -96,7 +106,7 @@
                 class="form-control m-2"
                 type="search"
                 name="search"
-                placeholder="search"
+                placeholder="Inserte busqueda"
                 id="searchInput"
               />
             </div>

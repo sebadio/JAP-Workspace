@@ -60,7 +60,7 @@ window.onload = async () => {
   const container = document.getElementById("container");
   const titulo = document.getElementById("title");
 
-  const { datos, products } = await fetchProducts();
+  let { datos, products } = await fetchProducts();
 
   let initialArray = [...products];
 
@@ -77,19 +77,31 @@ window.onload = async () => {
   poblarLista(products);
 
   document.getElementById("sortAsc").addEventListener("click", () => {
-    let array = sorting(products, "name", false);
-    poblarLista(array);
+    products = sorting(products, "name", false);
+    poblarLista(products);
   });
 
   document.getElementById("sortDesc").addEventListener("click", () => {
-    let array = sorting(products, "name", true);
-    poblarLista(array);
+    products = sorting(products, "name", true);
+    poblarLista(products);
   });
 
   document.getElementById("sortByCount").addEventListener("click", () => {
-    let array = sorting(products, "soldCount", descCount);
+    document.getElementById("sortValue").innerHTML = `
+      <i class="fas fa-sort-amount-${descCount ? "down" : "up"} mr-1"></i> $
+    `;
+    products = sorting(products, "cost", descCount);
     descCount = !descCount;
-    poblarLista(array);
+    poblarLista(products);
+  });
+
+  document.getElementById("sortByRel").addEventListener("click", () => {
+    document.getElementById("sortRel").innerHTML = `
+      <i class="fas fa-sort-amount-${descCount ? "down" : "up"} mr-1"></i> Rel
+    `;
+    products = sorting(products, "soldCount", descCount);
+    descCount = !descCount;
+    poblarLista(products);
   });
 
   document.getElementById("rangeFilterCount").addEventListener("click", () => {
@@ -97,13 +109,10 @@ window.onload = async () => {
     let max = document.getElementById("rangeFilterCountMax");
 
     if (min && min !== "" && max && max !== "") {
-      let array = products.filter(
-        (item) => item.soldCount > min.value && item.soldCount < max.value
+      products = products.filter(
+        (item) => item.cost >= min.value && item.cost <= max.value
       );
-      poblarLista(array);
-
-      min.value = "";
-      max.value = "";
+      poblarLista(products);
     }
   });
 
@@ -111,13 +120,16 @@ window.onload = async () => {
     poblarLista(initialArray);
   });
 
-  document.getElementById("searchInput").addEventListener("input", (e) => {
+  document.getElementById("searchInput").addEventListener("input", () => {
     let input = document.getElementById("searchInput").value;
 
-    let array = products.filter((item) =>
-      item.name.toLowerCase().includes(input.toLowerCase())
-    );
-
-    poblarLista(array);
+    if (input === "" || input === undefined || input === null) {
+      poblarLista(products);
+    } else {
+      let searchArray = products.filter((item) =>
+        item.name.toLowerCase().includes(input.toLowerCase())
+      );
+      poblarLista(searchArray);
+    }
   });
 };
