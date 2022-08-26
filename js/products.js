@@ -105,15 +105,17 @@ window.onload = async () => {
   });
 
   document.getElementById("rangeFilterCount").addEventListener("click", () => {
-    let min = document.getElementById("rangeFilterCountMin");
-    let max = document.getElementById("rangeFilterCountMax");
+    let min =
+      document.getElementById("rangeFilterCountMin").value !== ""
+        ? Number(document.getElementById("rangeFilterCountMin").value)
+        : 0;
+    let max =
+      document.getElementById("rangeFilterCountMax").value !== ""
+        ? Number(document.getElementById("rangeFilterCountMax").value)
+        : 999999999;
 
-    if (min && min !== "" && max && max !== "") {
-      products = products.filter(
-        (item) => item.cost >= min.value && item.cost <= max.value
-      );
-      poblarLista(products);
-    }
+    products = products.filter((item) => item.cost >= min && item.cost <= max);
+    poblarLista(products);
   });
 
   document.getElementById("clearRangeFilter").addEventListener("click", () => {
