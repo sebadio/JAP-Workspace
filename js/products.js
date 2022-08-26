@@ -117,6 +117,8 @@ window.onload = async () => {
   });
 
   document.getElementById("clearRangeFilter").addEventListener("click", () => {
+    document.getElementById("rangeFilterCountMin").value = "";
+    document.getElementById("rangeFilterCountMax").value = "";
     products = initialArray;
     poblarLista(initialArray);
   });
