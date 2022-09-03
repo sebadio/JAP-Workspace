@@ -59,9 +59,6 @@ const sorting = (array, tipo, desc) => {
 
 // Esperamos a que se carguen los elementos del DOM:
 window.onload = async () => {
-  // Funcion que agrega el nombre del usuario a la navbar
-  setUser();
-
   // Agarramos el div en el que se van a encontrar los productos:
   const container = document.getElementById("container");
   const titulo = document.getElementById("title");

@@ -42,10 +42,6 @@ let getJSONData = function (url) {
     });
 };
 
-window.onload = () => {
-  setUser();
-};
-
 const setUser = () => {
   if (localStorage.getItem("user")) {
     const navbarUl = document.getElementsByClassName(
@@ -59,3 +55,7 @@ const setUser = () => {
     )}</a>`;
   }
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  setUser();
+});
