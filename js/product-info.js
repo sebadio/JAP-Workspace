@@ -1,9 +1,12 @@
+// Agarramos el productId para los fetch necesarios
 const productId = localStorage.getItem("productId");
 
+// Funcion que nos ayuda a settear la id para redirigirnos
 const redirect = (id) => {
   localStorage.setItem("productId", id);
 };
 
+// Fetch Productos
 const fetchProduct = async () => {
   const url = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
   const respuesta = await fetch(url);
@@ -13,6 +16,7 @@ const fetchProduct = async () => {
   return data;
 };
 
+// Fetch Comentarios
 const fetchComments = async () => {
   const url = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
   const respuesta = await fetch(url);
@@ -22,6 +26,7 @@ const fetchComments = async () => {
   return data;
 };
 
+// Funcion que agrega los comentarios
 const poblarComentarios = async () => {
   const comentarios = await fetchComments();
 
@@ -29,10 +34,11 @@ const poblarComentarios = async () => {
     "comentarios"
   ).innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
 
+  // Mostramos una alerta o los
   if (comentarios.length === 0) {
     document.getElementById(
-      "comentariosUl"
-    ).innerHTML = `<li class="text-center list-group-item">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</li>`;
+      "comentarios"
+    ).innerHTML = `<div class="text-center alert-secondary p-4 rounded-3">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</div>`;
   } else {
     for (let i = 0; i < comentarios.length; i++) {
       const element = comentarios[i];
@@ -55,6 +61,7 @@ const poblarComentarios = async () => {
   }
 };
 
+// Funcion que crea y agrega nuestro comentario
 const comentar = () => {
   const comentarioTexto = document.getElementById("comentarioTexto").value;
   const puntuacion = Number(document.getElementById("puntuacion").value);
@@ -92,6 +99,7 @@ const comentar = () => {
   }, 1600);
 };
 
+// Funcion que modifica el container para mostrar la info del producto seleccionado
 const poblar = async () => {
   const {
     name,
@@ -247,7 +255,9 @@ const poblar = async () => {
     </div>`;
   }
 
+  // Llamamos a la funcion para poblar los comentarios
   poblarComentarios();
 };
 
+// Llamamos a la funcion de poblar
 poblar();
