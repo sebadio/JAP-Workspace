@@ -213,7 +213,7 @@ const comentar = () => {
 
   document.getElementById("comentarios").innerHTML += `
     <li id="ownComment" class="list-group-item transition active">
-        <div class="d-flex"><span><strong>${localStorage.getItem(
+        <div class="d-flex gap-2"><span><strong>${localStorage.getItem(
           "user"
         )}</strong></span> - <div id="starsOwnComment"></div> <span>${time}</span></div>
         <div>${comentarioTexto}</div>
