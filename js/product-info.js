@@ -1,5 +1,9 @@
 const productId = localStorage.getItem("productId");
 
+const redirect = (id) => {
+  localStorage.setItem("productId", id);
+};
+
 const fetchProduct = async () => {
   const url = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
   const respuesta = await fetch(url);
@@ -18,8 +22,74 @@ const fetchComments = async () => {
   return data;
 };
 
-const redirect = (id) => {
-  localStorage.setItem("productId", id);
+const poblarComentarios = async () => {
+  const comentarios = await fetchComments();
+
+  document.getElementById(
+    "comentarios"
+  ).innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
+
+  if (comentarios.length === 0) {
+    document.getElementById(
+      "comentariosUl"
+    ).innerHTML = `<li class="text-center list-group-item">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</li>`;
+  } else {
+    for (let i = 0; i < comentarios.length; i++) {
+      const element = comentarios[i];
+
+      document.getElementById("comentarios").innerHTML += `
+    
+        <li class="list-group-item">
+            <div class="d-flex gap-2"><span><strong>${element.user}</strong></span> - <div id="stars${i}"></div> <span><small>${element.dateTime}</small></span></div>
+            <div>${element.description}</div>
+        </li>
+        `;
+
+      for (let x = 0; x < 5; x++) {
+        document.getElementById(`stars${i}`).innerHTML +=
+          x < element.score
+            ? `<span class="fa fa-star checked"></span>`
+            : `<span class="fa fa-star"></span>`;
+      }
+    }
+  }
+};
+
+const comentar = () => {
+  const comentarioTexto = document.getElementById("comentarioTexto").value;
+  const puntuacion = Number(document.getElementById("puntuacion").value);
+  const date = new Date();
+  const time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+  document.getElementById("comentarios").innerHTML += `
+    <li id="ownComment" class="list-group-item transition active">
+        <div class="d-flex gap-2"><span><strong>${localStorage.getItem(
+          "user"
+        )}</strong></span> - <div id="starsOwnComment"></div> <span>${time}</span></div>
+        <div>${comentarioTexto}</div>
+    </li>
+  `;
+
+  for (let i = 0; i < 5; i++) {
+    document.getElementById(`starsOwnComment`).innerHTML +=
+      i < puntuacion
+        ? `<span class="fa fa-star checked"></span>`
+        : `<span class="fa fa-star"></span>`;
+  }
+
+  document.getElementById("formComment").innerHTML = `
+    <div class="text-center form-control">
+        ¡Gracias por su comentario!
+    </div>
+  `;
+
+  setTimeout(() => {
+    document.getElementById("ownComment").classList.remove("active");
+  }, 1500);
+
+  setTimeout(() => {
+    document.getElementById("ownComment").classList.remove("transition");
+  }, 1600);
 };
 
 const poblar = async () => {
@@ -102,8 +172,10 @@ const poblar = async () => {
 
   <div class="my-5 row">
     <h2>Comentarios</h2>
-    <div class="container">
-      <ul class="list-group" id="comentarios"></ul>
+    <div id="comentarios" class="container">
+      <div class="spinner-border text-info" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
   </div>
   
@@ -174,73 +246,8 @@ const poblar = async () => {
         </div>
     </div>`;
   }
-};
 
-const poblarComentarios = async () => {
-  const comentarios = await fetchComments();
-
-  if (comentarios.length === 0) {
-    document.getElementById(
-      "comentarios"
-    ).innerHTML = `<li class="text-center list-group-item">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</li>`;
-  } else {
-    for (let i = 0; i < comentarios.length; i++) {
-      const element = comentarios[i];
-
-      document.getElementById("comentarios").innerHTML += `
-    
-        <li class="list-group-item">
-            <div class="d-flex gap-2"><span><strong>${element.user}</strong></span> - <div id="stars${i}"></div> <span><small>${element.dateTime}</small></span></div>
-            <div>${element.description}</div>
-        </li>
-        `;
-
-      for (let x = 0; x < 5; x++) {
-        document.getElementById(`stars${i}`).innerHTML +=
-          x < element.score
-            ? `<span class="fa fa-star checked"></span>`
-            : `<span class="fa fa-star"></span>`;
-      }
-    }
-  }
-};
-
-const comentar = () => {
-  const comentarioTexto = document.getElementById("comentarioTexto").value;
-  const puntuacion = Number(document.getElementById("puntuacion").value);
-  const date = new Date();
-  const time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-
-  document.getElementById("comentarios").innerHTML += `
-    <li id="ownComment" class="list-group-item transition active">
-        <div class="d-flex gap-2"><span><strong>${localStorage.getItem(
-          "user"
-        )}</strong></span> - <div id="starsOwnComment"></div> <span>${time}</span></div>
-        <div>${comentarioTexto}</div>
-    </li>
-  `;
-
-  for (let i = 0; i < 5; i++) {
-    document.getElementById(`starsOwnComment`).innerHTML +=
-      i < puntuacion
-        ? `<span class="fa fa-star checked"></span>`
-        : `<span class="fa fa-star"></span>`;
-  }
-
-  document.getElementById("formComment").innerHTML = `
-    <div class="text-center form-control">
-        ¡Gracias por su comentario!
-    </div>
-  `;
-
-  setTimeout(() => {
-    document.getElementById("ownComment").classList.remove("active");
-  }, 1500);
-
-  setTimeout(() => {
-    document.getElementById("ownComment").classList.remove("transition");
-  }, 1600);
+  poblarComentarios();
 };
 
 poblar();
-poblarComentarios();
