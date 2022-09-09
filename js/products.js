@@ -13,8 +13,15 @@ const fetchProducts = async () => {
   return { datos, products };
 };
 
+const redirectProduct = (e) => {
+  localStorage.setItem("productId", e);
+  location.href = "product-info.html";
+};
+
 // Funcion que pobla la lista en base a un array
 const poblarLista = (products) => {
+  console.log(products);
+
   // Agarramos la lista
   const lista = document.getElementById("lista");
 
@@ -24,7 +31,7 @@ const poblarLista = (products) => {
   // Poblamos la lista con los productos y sus respectivas clases de Bootstrap
   products.map((producto) => {
     lista.innerHTML += `
-      <li class="list-group-item w-100 d-flex flex-row p-2 justify-content-between list-group-item-action cursor-active">
+      <li class="list-group-item w-100 d-flex flex-row p-2 justify-content-between list-group-item-action cursor-active" onclick="redirectProduct(${producto.id})">
           <div class="w-25 card p-1">
               <img class="img-fluid" src="${producto.image}" >
           </div>
