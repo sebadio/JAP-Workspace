@@ -37,8 +37,8 @@ const poblarComentarios = async () => {
   // Mostramos una alerta o los
   if (comentarios.length === 0) {
     document.getElementById(
-      "comentarios"
-    ).innerHTML = `<div class="text-center alert-secondary p-4 rounded-3">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</div>`;
+      "comentariosUl"
+    ).innerHTML = `<div id="noComment" class="text-center alert-secondary p-4 rounded-3">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</div>`;
   } else {
     for (let i = 0; i < comentarios.length; i++) {
       const element = comentarios[i];
@@ -68,7 +68,11 @@ const comentar = () => {
   const date = new Date();
   const time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
-  document.getElementById("comentarios").innerHTML += `
+  if (document.getElementById("noComment")) {
+    document.getElementById("noComment").parentElement.innerHTML = "";
+  }
+
+  document.getElementById("comentariosUl").innerHTML += `
     <li id="ownComment" class="list-group-item transition active">
         <div class="d-flex gap-2"><span><strong>${localStorage.getItem(
           "user"
