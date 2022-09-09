@@ -211,13 +211,11 @@ const comentar = () => {
   const date = new Date();
   const time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
-  console.log({ comentarioTexto, puntuacion });
-
   document.getElementById("comentarios").innerHTML += `
     <li id="ownComment" class="list-group-item transition active">
-        <div><span><strong>${localStorage.getItem(
+        <div class="d-flex"><span><strong>${localStorage.getItem(
           "user"
-        )}</strong></span> - <span>${time}</span> <div id="starsOwnComment"></div></div>
+        )}</strong></span> - <div id="starsOwnComment"></div> <span>${time}</span></div>
         <div>${comentarioTexto}</div>
     </li>
   `;
