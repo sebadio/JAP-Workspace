@@ -83,6 +83,18 @@ const comentar = () => {
   const puntuacion = Number(document.getElementById("puntuacion").value);
   const time = getDate();
 
+  if (document.getElementById("puntuacion").value === "Su puntuación") {
+    const invalid = document.createElement("p");
+    invalid.innerText = "Por favor ingrese una puntuación valida";
+    invalid.classList.add("text-danger");
+    invalid.classList.add("fw-bold");
+    invalid.classList.add("mt-3");
+    document.getElementById("formComment").appendChild(invalid);
+
+    document.getElementById("puntuacion").classList.add("border-danger");
+    return;
+  }
+
   if (document.getElementById("noComment")) {
     document.getElementById("noComment").parentElement.innerHTML = "";
   }
@@ -116,6 +128,14 @@ const comentar = () => {
   setTimeout(() => {
     document.getElementById("ownComment").classList.remove("transition");
   }, 1600);
+};
+
+// Funcion que nos previene el enviar nuestro comentario sin una puntuacion
+const formListener = () => {
+  document.getElementById("puntuacion").addEventListener("change", () => {
+    document.getElementById("form-button").classList.remove("disabled");
+    document.getElementById("form-button").disabled = false;
+  });
 };
 
 // Funcion que modifica el container para mostrar la info del producto seleccionado
@@ -228,14 +248,14 @@ const poblar = async () => {
         ></textarea>
         <p class="mt-3 mb-1">Tu puntuación:</p>
         <select id="puntuacion" class="form-select" style="width: min-content;" aria-label="Default select example">
-          <option selected>Su puntuación</option>
+          <option selected disabled>Su puntuación</option>
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <button class="btn btn-primary mt-3 mb-1" style="width: min-content;" type="button" onclick="comentar()">
+        <button disabled id="form-button" class="btn btn-primary mt-3 mb-1 disabled" style="width: min-content;" type="button" onclick="comentar()">
           Enviar
         </button>
       </div>
@@ -284,6 +304,7 @@ const poblar = async () => {
 
   // Llamamos a la funcion para poblar los comentarios
   poblarComentarios();
+  formListener();
 };
 
 // Llamamos a la funcion de poblar
