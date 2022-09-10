@@ -136,12 +136,12 @@ const poblar = async () => {
   contenedor.style.marginTop = "2rem";
 
   contenedor.innerHTML = `
-  <h1>${name}</h1>
-  <hr />
-  
+  <p class="m-0">Caregoria / Producto</p>
+  <p>${category} > <span style="font-weight: 600;">${name}</span></p>
+
   <div class="row">
-    <div class="col-7">
-      <div id="productCarousel" class="carousel slide" data-bs-ride="true">
+    <div class="col-8">
+      <div id="productCarousel" class="carousel carousel-dark slide" data-bs-ride="true">
         <div id="carouselIndicators" class="carousel-indicators">
           <button
             type="button"
@@ -178,21 +178,29 @@ const poblar = async () => {
       </div>
     </div>
   
-    <div class="col-5">
-      <h4>Precio <span></span></h4>
-      <p>${currency} ${cost}</p>
-  
-      <h4>Descripción</h4>
-      <p>${description}</p>
-  
-      <h4>Categoria</h4>
-      <p>${category}</p>
-      <br />
-  
-      <h4>Cantidad de vendidos</h4>
-      <p>${soldCount}</p>
-      <br />
+    <div class="col-4">
+      <div class="border p-4 rounded h-100">
+        <p class="m-0">Vendidos: ${soldCount}</p>
+        <h2 class="fw-bold">${name}</h2>
+        <hr >
+        
+        <div style="height: 80%;" class="d-flex flex-column justify-content-around">
+          <div class="d-flex flex-column">
+            <h2>Precio:</h2>
+            <span style="font-weight: 600;" class="fs-2 py-2">${currency} ${cost}</span>
+          </div>
+
+          <button disabled class="btn btn-primary fw-bold p-3 rounded-pill disabled w-100">Agregar al carrito</button>
+        </div>
+
+      </div>
     </div>
+  </div>
+
+
+  <div class="my-5 row">
+    <h4 class="fw-bold">Descripción del producto:</h4>
+    <p>${description}</p>
   </div>
   
   <hr >
