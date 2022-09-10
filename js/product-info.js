@@ -61,12 +61,27 @@ const poblarComentarios = async () => {
   }
 };
 
+const getDate = () => {
+  const date = new Date();
+
+  const year = date.getFullYear();
+  const month =
+    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+  const day = date.getDate < 10 ? `0${date.getDate()}` : date.getDate();
+  const hour = date.getHours < 10 ? `0${date.getHours()}` : date.getHours();
+  const minutes =
+    date.getMinutes < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const seconds =
+    date.getSeconds < 10 ? `0${date.getSeconds()}` : date.getSeconds();
+
+  return `${year}-${month}-${day} ${hour}:${minutes}:${seconds}`;
+};
+
 // Funcion que crea y agrega nuestro comentario
 const comentar = () => {
   const comentarioTexto = document.getElementById("comentarioTexto").value;
   const puntuacion = Number(document.getElementById("puntuacion").value);
-  const date = new Date();
-  const time = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  const time = getDate();
 
   if (document.getElementById("noComment")) {
     document.getElementById("noComment").parentElement.innerHTML = "";
@@ -76,7 +91,7 @@ const comentar = () => {
     <li id="ownComment" class="list-group-item transition active">
         <div class="d-flex gap-2"><span><strong>${localStorage.getItem(
           "user"
-        )}</strong></span> - <div id="starsOwnComment"></div> <span>${time}</span></div>
+        )}</strong></span> - <div id="starsOwnComment"></div> <span><small>${time}</small></span></div>
         <div>${comentarioTexto}</div>
     </li>
   `;
