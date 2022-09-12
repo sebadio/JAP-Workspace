@@ -248,7 +248,7 @@ const poblar = async () => {
         <div style="height: 80%;" class="d-flex flex-column justify-content-around">
           <div class="d-flex flex-column">
           <h2>Precio:</h2>
-              <div style="font-family: sans-serif;" class="d-flex align-items-center fw-bold lh-sm fs-2"><span>${currency}</span>&nbsp<span>${cost}</span></div>
+              <div class="d-flex align-items-center fw-bold lh-sm fs-2 font-monospace"><span>${currency}</span>&nbsp<span>${cost}</span></div>
           </div>
 
           <button disabled class="btn btn-primary fw-bold p-3 rounded-pill disabled w-100">Agregar al carrito</button>
