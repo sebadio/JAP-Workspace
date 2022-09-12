@@ -6,42 +6,73 @@ const redirect = (id) => {
   localStorage.setItem("productId", id);
 };
 
-// Fetch Productos
-const fetchProduct = async () => {
-  const url = `https://japceibal.github.io/emercado-api/products/${productId}.json`;
-  const respuesta = await fetch(url);
+// Funcion que extrae los datos del producto y sus comentarios
+const fetchFunction = async () => {
+  try {
+    const product = await fetch(
+      `https://japceibal.github.io/emercado-api/products/${productId}.json`
+    );
+    const comentarios = await fetch(
+      `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`
+    );
 
-  const data = respuesta.json();
-
-  return data;
-};
-
-// Fetch Comentarios
-const fetchComments = async () => {
-  const url = `https://japceibal.github.io/emercado-api/products_comments/${productId}.json`;
-  const respuesta = await fetch(url);
-
-  const data = respuesta.json();
-
-  return data;
+    if (product.ok) {
+      const productData = await product.json();
+      if (comentarios.ok) {
+        const comentarioData = await await comentarios.json();
+        return {
+          ...productData,
+          comentarioData,
+        };
+      } else {
+        return {
+          ...productData,
+          comentarioData: "error",
+        };
+      }
+    } else {
+      return {
+        name: null,
+        images: null,
+        description: null,
+        currency: null,
+        category: null,
+        cost: null,
+        soldCount: null,
+        relatedProducts: null,
+        comentarioData: null,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+    return {
+      name: null,
+      images: null,
+      description: null,
+      currency: null,
+      category: null,
+      cost: null,
+      soldCount: null,
+      relatedProducts: null,
+      comentarioData: null,
+    };
+  }
 };
 
 // Funcion que agrega los comentarios
-const poblarComentarios = async () => {
-  const comentarios = await fetchComments();
-
+const poblarComentarios = async (comentarioData) => {
   document.getElementById(
     "comentarios"
   ).innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
 
   // Mostramos una alerta o los
-  if (comentarios.length === 0) {
+  if (comentarioData.length === 0 || comentarioData === null) {
     document.getElementById(
       "comentariosUl"
     ).innerHTML = `<div id="noComment" class="text-center alert-secondary p-4 rounded-3">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</div>`;
   } else {
-    for (let i = 0; i < comentarios.length; i++) {
-      const element = comentarios[i];
+    for (let i = 0; i < comentarioData.length; i++) {
+      const element = comentarioData[i];
 
       document.getElementById("comentarios").innerHTML += `
     
@@ -140,6 +171,8 @@ const formListener = () => {
 
 // Funcion que modifica el container para mostrar la info del producto seleccionado
 const poblar = async () => {
+  const contenedor = document.getElementById("container");
+
   const {
     name,
     images,
@@ -149,9 +182,17 @@ const poblar = async () => {
     cost,
     soldCount,
     relatedProducts,
-  } = await fetchProduct();
+    comentarioData,
+  } = await fetchFunction();
 
-  const contenedor = document.getElementById("container");
+  if (name === null && description === null && images === null) {
+    contenedor.innerHTML = `
+      <div class="alert alert-danger text-center" role="alert">
+        Hubo un problema, por favor intente mas tarde.
+      </div>
+    `;
+    return;
+  }
 
   contenedor.style.marginTop = "2rem";
 
@@ -206,8 +247,8 @@ const poblar = async () => {
         
         <div style="height: 80%;" class="d-flex flex-column justify-content-around">
           <div class="d-flex flex-column">
-            <h2>Precio:</h2>
-            <span style="font-weight: 600;" class="fs-2 py-2">${currency} ${cost}</span>
+          <h2>Precio:</h2>
+              <div class="d-flex align-items-center fw-bold lh-sm fs-2"><span>${currency}</span> <span>${cost}</span></div>
           </div>
 
           <button disabled class="btn btn-primary fw-bold p-3 rounded-pill disabled w-100">Agregar al carrito</button>
@@ -303,7 +344,7 @@ const poblar = async () => {
   }
 
   // Llamamos a la funcion para poblar los comentarios
-  poblarComentarios();
+  poblarComentarios(comentarioData);
   formListener();
 };
 
