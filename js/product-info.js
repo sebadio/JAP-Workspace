@@ -61,11 +61,11 @@ const fetchFunction = async () => {
 
 // Funcion que agrega los comentarios
 const poblarComentarios = async (comentarioData) => {
-  document.getElementById(
-    "comentarios"
-  ).innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
+  const comentarios = document.getElementById("comentarios");
 
-  // Mostramos una alerta o los
+  comentarios.innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
+
+  // Mostramos una alerta o los comentarios, segun si el producto los tiene o no
   if (comentarioData.length === 0 || comentarioData === null) {
     document.getElementById(
       "comentariosUl"
@@ -74,7 +74,7 @@ const poblarComentarios = async (comentarioData) => {
     for (let i = 0; i < comentarioData.length; i++) {
       const element = comentarioData[i];
 
-      document.getElementById("comentarios").innerHTML += `
+      comentarios.innerHTML += `
     
         <li class="list-group-item">
             <div class="d-flex gap-2"><span><strong>${element.user}</strong></span> - <div id="stars${i}"></div> <span><small>${element.dateTime}</small></span></div>
@@ -92,6 +92,7 @@ const poblarComentarios = async (comentarioData) => {
   }
 };
 
+// Funcion que extrae la fecha y hora actual para ponerla en el comentario
 const getDate = () => {
   const date = new Date();
 
@@ -184,6 +185,8 @@ const poblar = async () => {
     relatedProducts,
     comentarioData,
   } = await fetchFunction();
+
+  // Chequeamos si hubo un error en el fetch y si lo hubo mostramos una alerta
 
   if (name === null && description === null && images === null) {
     contenedor.innerHTML = `
