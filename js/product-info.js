@@ -115,6 +115,7 @@ const comentar = () => {
   const puntuacion = Number(document.getElementById("puntuacion").value);
   const time = getDate();
 
+  // If que impide enviar una puntuacion no valida
   if (document.getElementById("puntuacion").value === "Su puntuación") {
     const invalid = document.createElement("p");
     invalid.innerText = "Por favor ingrese una puntuación valida";
