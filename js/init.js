@@ -49,10 +49,25 @@ const setUser = () => {
     )[0];
 
     const liItem = navbarUl.children[3];
+    liItem.classList.add("dropdown");
 
-    liItem.innerHTML = `<a class="nav-link" href="my-profile.html">${localStorage.getItem(
-      "user"
-    )}</a>`;
+    liItem.innerHTML = `
+    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    ${localStorage.getItem("user")}
+    </a>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>
+      <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li><a class="dropdown-item" href="index.html" onclick="removeUser()">Cerrar Sesión</a></li>
+    </ul>
+    `;
+  }
+};
+
+const removeUser = () => {
+  if (localStorage.getItem("user")) {
+    localStorage.removeItem("user");
   }
 };
 
