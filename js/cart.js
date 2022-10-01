@@ -1,0 +1,217 @@
+const getData = async () => {
+  if (localStorage.getItem("cart")) {
+    return JSON.parse(localStorage.getItem("cart"));
+  }
+
+  return null;
+};
+
+const addTableData = async () => {
+  const articles = await getData();
+
+  if (checkArticles(articles)) {
+    return;
+  }
+
+  addTable();
+
+  addTableItems(articles);
+
+  handleSumTotal();
+
+  addForm();
+};
+
+const checkArticles = (articles) => {
+  if (
+    articles === null ||
+    !articles ||
+    articles === [] ||
+    articles.length === 0 ||
+    articles.lengt < 1
+  ) {
+    document.getElementById("contenedor").innerHTML = `
+            <div class="p-4 bg-dark rounded text-white text-center">
+                No tienes nada en tu carrito <a class="text-white fw-bold" href="categories.html">Empieza a comprar ahora!</a>
+            </div>
+            `;
+    return true;
+  }
+  return false;
+};
+
+const addTable = () => {
+  document.getElementById("contenedor").innerHTML = `
+    <table class="table table-striped align-middle">
+    <thead>
+        <tr class="table-dark text-center">
+            <th scope="col">Imagen</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Costo</th>
+            <th scope="col">Cantidad</th>
+            <th scope="col">Subtotal</th>
+            <th scope="col">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+    <foot>
+    </tfoot>
+        <tr class="table-dark text-center">
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Total:</th>
+            <th scope="col" style="font-family: sans-serif;" class="text-wrap" id="sumTotal"></th>
+            <th scope="col"></th>
+        </tr>
+    </table>
+
+    <hr >
+
+    <form id="formulario"></form>
+  `;
+};
+
+const addTableItems = (articles) => {
+  if (checkArticles(articles)) {
+    return;
+  }
+
+  const tableBody = document.getElementById("tableBody");
+
+  tableBody.innerHTML = "";
+
+  for (let i = 0; i < articles.length; i++) {
+    const { id, imagen, name, costo, count, currency } = articles[i];
+
+    tableBody.innerHTML += `
+    <tr class="text-center">
+        <td class="w-25"><img class="img-fluid w-50 rounded" src="${imagen}"></td>
+        <td class="fw-bold">${name}</td>
+        <td class="text-nowrap" style="font-family: sans-serif;">${currency} ${costo}</td>
+        <td><input min="0" class="form-control w-50 text-start mx-auto" onchange="updatePrice(${id}, '${currency}', '${costo}')" id="count${id}" type="number" value="${count}" ></td>
+        <td id="subtotal${id}" style="font-family: sans-serif;" class="fw-bolder text-nowrap subtotal">${currency} ${
+      costo * count
+    }</td>
+    <td><button onclick="handleRemoveItem(${id})" class="btn btn-outline-dark"><i class="fas fa-times"></i></button></td>
+    </tr>
+    `;
+  }
+};
+
+const handleRemoveItem = (id) => {
+  let articles = JSON.parse(localStorage.getItem("cart"));
+
+  articles = articles.filter((articulo) => articulo.id !== id);
+
+  localStorage.setItem("cart", JSON.stringify(articles));
+
+  addTableItems(articles);
+  if (!articles.length === 0) {
+    handleSumTotal();
+  }
+};
+
+const updatePrice = (id, currency, costo) => {
+  const cant = document.getElementById("count" + id).value;
+
+  const cart = JSON.parse(localStorage.getItem("cart"));
+
+  cart.map((articulo) => {
+    articulo.id === id ? (articulo.count = cant) : articulo;
+  });
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  document.getElementById("subtotal" + id).innerHTML = `${currency} ${
+    costo * cant
+  }`;
+
+  handleSumTotal();
+};
+
+const handleSumTotal = () => {
+  const subtotales = document.querySelectorAll(".subtotal");
+
+  let sumTotal = 0;
+
+  for (let i = 0; i < subtotales.length; i++) {
+    const element = document
+      .querySelectorAll(".subtotal")
+      [i].innerHTML.split(" ");
+
+    let price = Number(element[1]);
+
+    if (element[0] === "UYU") {
+      price = element[1] / 40;
+    }
+
+    sumTotal += Number(price);
+  }
+
+  document.getElementById("sumTotal").setAttribute("value", sumTotal);
+  document.getElementById("sumTotal").innerHTML = `USD ${Math.ceil(sumTotal)}`;
+};
+
+const addForm = () => {
+  document.getElementById("formulario").innerHTML = `
+          <h4>Tipo de envio</h4>
+  
+          <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio1" name="optradio" value="premium" checked>
+              <label class="form-check-label" for="radio1">Premium 2 a 5 días (15%)</label>
+          </div>
+          <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio2" name="optradio" value="express">
+              <label class="form-check-label" for="radio2">Express 5 a 8 días (7%)</label>
+          </div>
+          <div class="form-check">
+              <input type="radio" class="form-check-input" id="radio3" name="optradio" value="standard">
+              <label class="form-check-label" for="radio3">Standard 12 a 15 días (5%)</label>
+          </div>
+  
+          <div class="row mt-4">
+              <div class="col-6">
+                  <label class="form-check-label">Calle</label>
+                  <input class="form-control" id="inputCalle" type="text">
+                  <label class="form-check-label mt-2">Esquina</label>
+                  <input class="form-control" id="inputEsquina" type="text">
+                  </div>
+              <div class="col-4">    
+                  <label class="form-check-label">Número</label>
+                  <input class="form-control" id="inputNumber" type="number">
+              </div>
+          </div>
+  
+          <button class="btn btn-outline-dark fw-bold mt-4" type="submit">Comprar</button>
+      `;
+
+  document.getElementById("formulario").addEventListener("submit", (e) => {
+    handleSubmit(e);
+  });
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  const calle = document.getElementById("inputCalle").value;
+  const numero = Number(document.getElementById("inputNumber").value);
+  const esquina = document.getElementById("inputEsquina").value;
+  const cost = document.getElementById("sumTotal").getAttribute("value");
+  const currency = document.getElementById("sumTotal").innerHTML.split(" ")[0];
+
+  const orderData = {
+    calle,
+    numero,
+    esquina,
+    currency,
+    cost,
+    roundedCost: Math.ceil(cost),
+  };
+
+  console.log(orderData);
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  addTableData();
+});

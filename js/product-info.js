@@ -176,6 +176,7 @@ const poblar = async () => {
   const contenedor = document.getElementById("container");
 
   const {
+    id,
     name,
     images,
     description,
@@ -255,7 +256,7 @@ const poblar = async () => {
               <div class="d-flex align-items-center fw-bold lh-sm fs-2 font-monospace"><span>${currency}</span>&nbsp<span>${cost}</span></div>
           </div>
 
-          <button disabled class="btn btn-primary fw-bold p-3 rounded-pill disabled w-100">Agregar al carrito</button>
+          <button class="btn btn-outline-dark fw-bold p-3 rounded-pill w-100" onclick="handleAddToCart(${id}, '${name}', ${cost}, '${currency}', '${images[0]}')">Agregar al carrito</button>
         </div>
 
       </div>
@@ -354,3 +355,46 @@ const poblar = async () => {
 
 // Llamamos a la funcion de poblar
 poblar();
+
+const handleAddToCart = (id, name, costo, currency, imagen) => {
+  if (!localStorage.getItem("cart")) {
+    localStorage.setItem(
+      "cart",
+      JSON.stringify([
+        {
+          id,
+          name,
+          costo,
+          currency,
+          imagen,
+          count: 1,
+        },
+      ])
+    );
+
+    return;
+  }
+
+  const cart = JSON.parse(localStorage.getItem("cart"));
+
+  if (cart.some((cartId) => cartId.id === id)) {
+    document.getElementById("container").innerHTML += `
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        Este articulo ya esta en tu carrito
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    `;
+    return;
+  }
+
+  cart.push({
+    id,
+    name,
+    costo,
+    currency,
+    imagen,
+    count: 1,
+  });
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+};
