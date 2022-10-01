@@ -20,13 +20,23 @@ const redirectProduct = (e) => {
 
 // Funcion que pobla la lista en base a un array
 const poblarLista = (products) => {
-  console.log(products);
-
   // Agarramos la lista
   const lista = document.getElementById("lista");
 
   // Limpiamos la lista por si tiene datos antiguos
   lista.innerHTML = "";
+
+  if (!products || products.length === 0 || products === []) {
+    lista.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML =
+      "";
+    lista.parentElement.previousSibling.previousSibling.innerHTML = "";
+
+    lista.parentElement.innerHTML = `
+      <div class="p-4 bg-dark rounded text-white text-center">
+        Actualmente no hay ningun producto dentro de esta categoria, ¡pero te invitamos a explorar nuestras <a class="text-white fw-bold" href="categories.html">otras categorias!</a>
+      </div>
+    `;
+  }
 
   // Poblamos la lista con los productos y sus respectivas clases de Bootstrap
   products.map((producto) => {
@@ -84,6 +94,10 @@ window.onload = async () => {
   container.innerHTML = `<ul id="lista" class="list-group w-100"></ul>`;
 
   poblarLista(products);
+
+  if (!document.getElementById("lista")) {
+    return;
+  }
 
   // Filtro de nombre Asc
   document.getElementById("sortAsc").addEventListener("click", () => {

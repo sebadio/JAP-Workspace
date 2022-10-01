@@ -256,7 +256,7 @@ const poblar = async () => {
               <div class="d-flex align-items-center fw-bold lh-sm fs-2 font-monospace"><span>${currency}</span>&nbsp<span>${cost}</span></div>
           </div>
 
-          <button class="btn btn-outline-dark fw-bold p-3 rounded-pill w-100" onclick="handleAddToCart(${id}, '${name}', ${cost}, '${currency}', '${images[0]}')">Agregar al carrito</button>
+          <button class="btn btn-outline-dark fw-bold p-3 rounded-pill w-100" id="addToCart" onclick="handleAddToCart(${id}, '${name}', ${cost}, '${currency}', '${images[0]}')">Agregar al carrito</button>
         </div>
 
       </div>
@@ -351,6 +351,7 @@ const poblar = async () => {
   // Llamamos a la funcion para poblar los comentarios
   poblarComentarios(comentarioData);
   formListener();
+  checkIfAlreadyOnList(id);
 };
 
 // Llamamos a la funcion de poblar
@@ -387,6 +388,17 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
     return;
   }
 
+  document.getElementById("container").innerHTML += `
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      ¡Articulo agregado al carrito correctamente!
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  `;
+
+  document.getElementById("addToCart").setAttribute("disabled", "true");
+  document.getElementById("addToCart").innerHTML =
+    "Articulo ya esta en el carrito";
+
   cart.push({
     id,
     name,
@@ -397,4 +409,14 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
   });
 
   localStorage.setItem("cart", JSON.stringify(cart));
+};
+
+const checkIfAlreadyOnList = (id) => {
+  const cart = JSON.parse(localStorage.getItem("cart"));
+
+  if (cart.some((cartId) => cartId.id === id)) {
+    document.getElementById("addToCart").setAttribute("disabled", "true");
+    document.getElementById("addToCart").innerHTML =
+      "Articulo ya esta en el carrito";
+  }
 };
