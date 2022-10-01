@@ -158,16 +158,16 @@ const addForm = () => {
           <h4>Tipo de envio</h4>
   
           <div class="form-check">
-              <input type="radio" class="form-check-input" id="radio1" name="optradio" value="premium" checked>
-              <label class="form-check-label" for="radio1">Premium 2 a 5 días (15%)</label>
+              <input type="radio" class="form-check-input" id="premiumShipping" name="optradio" value="premium" checked>
+              <label class="form-check-label" for="premiumShipping">Premium 2 a 5 días (15%)</label>
           </div>
           <div class="form-check">
-              <input type="radio" class="form-check-input" id="radio2" name="optradio" value="express">
-              <label class="form-check-label" for="radio2">Express 5 a 8 días (7%)</label>
+              <input type="radio" class="form-check-input" id="expresShiping" name="optradio" value="express">
+              <label class="form-check-label" for="expresShiping">Express 5 a 8 días (7%)</label>
           </div>
           <div class="form-check">
-              <input type="radio" class="form-check-input" id="radio3" name="optradio" value="standard">
-              <label class="form-check-label" for="radio3">Standard 12 a 15 días (5%)</label>
+              <input type="radio" class="form-check-input" id="standardShipping" name="optradio" value="standard">
+              <label class="form-check-label" for="standardShipping">Standard 12 a 15 días (5%)</label>
           </div>
   
           <div class="row mt-4">
@@ -194,11 +194,28 @@ const addForm = () => {
 const handleSubmit = (e) => {
   e.preventDefault();
 
+  const premiumShipping = document.getElementById("premiumShipping").checked;
+  const expresShiping = document.getElementById("expresShiping").checked;
+  const standardShipping = document.getElementById("standardShipping").checked;
+
   const calle = document.getElementById("inputCalle").value;
   const numero = Number(document.getElementById("inputNumber").value);
   const esquina = document.getElementById("inputEsquina").value;
   const cost = document.getElementById("sumTotal").getAttribute("value");
   const currency = document.getElementById("sumTotal").innerHTML.split(" ")[0];
+  let shippingType;
+
+  if (premiumShipping) {
+    shippingType = "premium";
+  }
+
+  if (expresShiping) {
+    shippingType = "express";
+  }
+
+  if (standardShipping) {
+    shippingType = "standard";
+  }
 
   const orderData = {
     calle,
@@ -206,6 +223,7 @@ const handleSubmit = (e) => {
     esquina,
     currency,
     cost,
+    shippingType,
     roundedCost: Math.ceil(cost),
   };
 
