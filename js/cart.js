@@ -25,10 +25,11 @@ const addTableData = async () => {
 const checkArticles = (articles) => {
   if (
     articles === null ||
+    articles === undefined ||
     !articles ||
-    articles === [] ||
-    articles.length === 0 ||
-    articles.lengt < 1
+    articles === {} ||
+    Object.keys(articles).length === 0 ||
+    Object.keys(articles).length < 1
   ) {
     document.getElementById("contenedor").innerHTML = `
             <div class="p-4 bg-dark rounded text-white text-center">
@@ -81,8 +82,8 @@ const addTableItems = (articles) => {
 
   tableBody.innerHTML = "";
 
-  for (let i = 0; i < articles.length; i++) {
-    const { id, imagen, name, costo, count, currency } = articles[i];
+  for (const key in articles) {
+    const { id, imagen, name, costo, count, currency } = articles[key];
 
     tableBody.innerHTML += `
     <tr class="text-center">
@@ -102,12 +103,12 @@ const addTableItems = (articles) => {
 const handleRemoveItem = (id) => {
   let articles = JSON.parse(localStorage.getItem("cart"));
 
-  articles = articles.filter((articulo) => articulo.id !== id);
+  delete articles[id];
 
   localStorage.setItem("cart", JSON.stringify(articles));
 
   addTableItems(articles);
-  if (!(articles.length === 0)) {
+  if (!articles) {
     handleSumTotal();
   }
 };
@@ -117,9 +118,7 @@ const updatePrice = (id, currency, costo) => {
 
   const cart = JSON.parse(localStorage.getItem("cart"));
 
-  cart.map((articulo) => {
-    articulo.id === id ? (articulo.count = cant) : articulo;
-  });
+  cart[id].count = cant;
 
   localStorage.setItem("cart", JSON.stringify(cart));
 

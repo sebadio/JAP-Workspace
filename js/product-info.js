@@ -363,8 +363,8 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
   if (!cart) {
     localStorage.setItem(
       "cart",
-      JSON.stringify([
-        {
+      JSON.stringify({
+        [id]: {
           id,
           name,
           costo,
@@ -372,10 +372,10 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
           imagen,
           count: 1,
         },
-      ])
+      })
     );
   } else {
-    if (cart.some((cartId) => cartId.id === id)) {
+    if (cart[id]) {
       document.getElementById("container").innerHTML += `
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           Este articulo ya esta en tu carrito
@@ -385,16 +385,20 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
       return;
     }
 
-    cart.push({
-      id,
-      name,
-      costo,
-      currency,
-      imagen,
-      count: 1,
-    });
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(
+      "cart",
+      JSON.stringify({
+        ...cart,
+        [id]: {
+          id,
+          name,
+          costo,
+          currency,
+          imagen,
+          count: 1,
+        },
+      })
+    );
   }
 
   document.getElementById("container").innerHTML += `
@@ -413,7 +417,7 @@ const checkIfAlreadyOnList = (id) => {
   const cart = JSON.parse(localStorage.getItem("cart"));
 
   if (cart) {
-    if (cart.some((carrito) => carrito.id === id)) {
+    if (cart[id]) {
       document.getElementById("addToCart").setAttribute("disabled", "true");
       document.getElementById("addToCart").innerHTML =
         "Articulo ya esta en el carrito";
