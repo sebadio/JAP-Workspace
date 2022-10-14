@@ -150,7 +150,7 @@ const handleSumTotal = () => {
   }
 
   document.getElementById("sumTotal").setAttribute("value", sumTotal);
-  document.getElementById("sumTotal").innerHTML = `USD ${Math.ceil(sumTotal)}`;
+  document.getElementById("sumTotal").innerHTML = `USD ${Math.round(sumTotal)}`;
 };
 
 const addForm = () => {

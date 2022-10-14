@@ -358,7 +358,9 @@ const poblar = async () => {
 poblar();
 
 const handleAddToCart = (id, name, costo, currency, imagen) => {
-  if (!localStorage.getItem("cart")) {
+  const cart = JSON.parse(localStorage.getItem("cart"));
+
+  if (!cart) {
     localStorage.setItem(
       "cart",
       JSON.stringify([
@@ -374,18 +376,27 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
     );
 
     return;
-  }
+  } else {
+    if (cart.some((cartId) => cartId.id === id)) {
+      document.getElementById("container").innerHTML += `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          Este articulo ya esta en tu carrito
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `;
+      return;
+    }
 
-  const cart = JSON.parse(localStorage.getItem("cart"));
+    cart.push({
+      id,
+      name,
+      costo,
+      currency,
+      imagen,
+      count: 1,
+    });
 
-  if (cart.some((cartId) => cartId.id === id)) {
-    document.getElementById("container").innerHTML += `
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        Este articulo ya esta en tu carrito
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-    `;
-    return;
+    localStorage.setItem("cart", JSON.stringify(cart));
   }
 
   document.getElementById("container").innerHTML += `
@@ -398,25 +409,16 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
   document.getElementById("addToCart").setAttribute("disabled", "true");
   document.getElementById("addToCart").innerHTML =
     "Articulo ya esta en el carrito";
-
-  cart.push({
-    id,
-    name,
-    costo,
-    currency,
-    imagen,
-    count: 1,
-  });
-
-  localStorage.setItem("cart", JSON.stringify(cart));
 };
 
 const checkIfAlreadyOnList = (id) => {
   const cart = JSON.parse(localStorage.getItem("cart"));
 
-  if (cart.some((cartId) => cartId.id === id)) {
-    document.getElementById("addToCart").setAttribute("disabled", "true");
-    document.getElementById("addToCart").innerHTML =
-      "Articulo ya esta en el carrito";
+  if (cart) {
+    if (cart.some((carrito) => carrito.id === id)) {
+      document.getElementById("addToCart").setAttribute("disabled", "true");
+      document.getElementById("addToCart").innerHTML =
+        "Articulo ya esta en el carrito";
+    }
   }
 };
