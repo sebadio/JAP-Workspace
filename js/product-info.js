@@ -374,8 +374,6 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
         },
       ])
     );
-
-    return;
   } else {
     if (cart.some((cartId) => cartId.id === id)) {
       document.getElementById("container").innerHTML += `
