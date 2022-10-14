@@ -1,13 +1,7 @@
-const getData = async () => {
-  if (localStorage.getItem("cart")) {
-    return JSON.parse(localStorage.getItem("cart"));
-  }
-
-  return null;
-};
+/* Funcion que llama a todas las demas funciones */
 
 const addTableData = async () => {
-  const articles = await getData();
+  const articles = JSON.parse(localStorage.getItem("cart"));
 
   if (checkArticles(articles)) {
     return;
@@ -21,6 +15,8 @@ const addTableData = async () => {
 
   addForm();
 };
+
+/* Funcion que chequea si tenemos datos en el carrito y muestra una alerta si no tenemos nada */
 
 const checkArticles = (articles) => {
   if (
@@ -40,6 +36,8 @@ const checkArticles = (articles) => {
   }
   return false;
 };
+
+/* Funcion que agrega la tabla a la pagina */
 
 const addTable = () => {
   document.getElementById("contenedor").innerHTML = `
@@ -73,6 +71,8 @@ const addTable = () => {
   `;
 };
 
+/* Funcion que puebla la tabla con los datos */
+
 const addTableItems = (articles) => {
   if (checkArticles(articles)) {
     return;
@@ -100,6 +100,8 @@ const addTableItems = (articles) => {
   }
 };
 
+/* Funcion que usamos para remover un item de el carrito */
+
 const handleRemoveItem = (id) => {
   let articles = JSON.parse(localStorage.getItem("cart"));
 
@@ -112,6 +114,8 @@ const handleRemoveItem = (id) => {
     handleSumTotal();
   }
 };
+
+/* Funcion que actualiza el precio */
 
 const updatePrice = (id, currency, costo) => {
   const cant = document.getElementById("count" + id).value;
@@ -128,6 +132,8 @@ const updatePrice = (id, currency, costo) => {
 
   handleSumTotal();
 };
+
+/* Funcion que calcula y actualiza el precio total */
 
 const handleSumTotal = () => {
   const subtotales = document.querySelectorAll(".subtotal");
@@ -151,6 +157,8 @@ const handleSumTotal = () => {
   document.getElementById("sumTotal").setAttribute("value", sumTotal);
   document.getElementById("sumTotal").innerHTML = `USD ${Math.round(sumTotal)}`;
 };
+
+/* Funcion que agrega el formulario a la pagina */
 
 const addForm = () => {
   document.getElementById("formulario").innerHTML = `
@@ -190,6 +198,8 @@ const addForm = () => {
   });
 };
 
+/* Funcion que se encarga de manejar los datos del formulario al ser enviado */
+
 const handleSubmit = (e) => {
   e.preventDefault();
 
@@ -228,6 +238,8 @@ const handleSubmit = (e) => {
 
   console.log(orderData);
 };
+
+/* Escuchamos a cuando el DOM se cargue para llamar a la funcion principal */
 
 document.addEventListener("DOMContentLoaded", () => {
   addTableData();
