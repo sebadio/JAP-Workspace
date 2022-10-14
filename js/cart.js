@@ -89,7 +89,7 @@ const addTableItems = (articles) => {
         <td class="w-25"><img class="img-fluid w-50 rounded" src="${imagen}"></td>
         <td class="fw-bold">${name}</td>
         <td class="text-nowrap" style="font-family: sans-serif;">${currency} ${costo}</td>
-        <td><input min="0" class="form-control w-50 text-start mx-auto" onchange="updatePrice(${id}, '${currency}', '${costo}')" id="count${id}" type="number" value="${count}" ></td>
+        <td><input min="1" class="form-control w-50 text-start mx-auto" onchange="updatePrice(${id}, '${currency}', '${costo}')" id="count${id}" type="number" value="${count}" ></td>
         <td id="subtotal${id}" style="font-family: sans-serif;" class="fw-bolder text-nowrap subtotal">${currency} ${
       costo * count
     }</td>
@@ -107,7 +107,7 @@ const handleRemoveItem = (id) => {
   localStorage.setItem("cart", JSON.stringify(articles));
 
   addTableItems(articles);
-  if (!articles.length === 0) {
+  if (!(articles.length === 0)) {
     handleSumTotal();
   }
 };
