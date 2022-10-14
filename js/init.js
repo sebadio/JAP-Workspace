@@ -59,7 +59,7 @@ const setUser = () => {
       <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>
       <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
       <li><hr class="dropdown-divider"></li>
-      <li><a class="dropdown-item" href="index.html" onclick="removeUser()">Cerrar Sesión</a></li>
+      <li><a class="dropdown-item" href="login.html" onclick="removeUser()">Cerrar Sesión</a></li>
     </ul>
     `;
   }

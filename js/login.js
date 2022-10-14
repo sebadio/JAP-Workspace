@@ -60,7 +60,7 @@ const redirect = (email, user = null) => {
   localStorage.setItem("user", String(user ? user : email));
 
   setInterval(() => {
-    location.href = "portada.html";
+    location.href = "index.html";
   }, 1500);
 };
 
