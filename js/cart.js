@@ -110,7 +110,7 @@ const handleRemoveItem = (id) => {
   localStorage.setItem("cart", JSON.stringify(articles));
 
   addTableItems(articles);
-  if (!articles) {
+  if (articles && Object.keys(articles) > 0) {
     handleSumTotal();
   }
 };
@@ -180,13 +180,13 @@ const addForm = () => {
           <div class="row mt-4">
               <div class="col-6">
                   <label class="form-check-label">Calle</label>
-                  <input class="form-control" id="inputCalle" type="text">
+                  <input class="form-control" id="inputCalle" required minlength="3" type="text">
                   <label class="form-check-label mt-2">Esquina</label>
-                  <input class="form-control" id="inputEsquina" type="text">
+                  <input class="form-control" id="inputEsquina" required minlength="3" type="text">
                   </div>
               <div class="col-4">    
                   <label class="form-check-label">Número</label>
-                  <input class="form-control" id="inputNumber" type="number">
+                  <input class="form-control" id="inputNumber" required min="1" type="number">
               </div>
           </div>
   
@@ -206,6 +206,8 @@ const handleSubmit = (e) => {
   const premiumShipping = document.getElementById("premiumShipping").checked;
   const expresShiping = document.getElementById("expresShiping").checked;
   const standardShipping = document.getElementById("standardShipping").checked;
+
+  const cart = JSON.parse(localStorage.getItem("cart"));
 
   const calle = document.getElementById("inputCalle").value;
   const numero = Number(document.getElementById("inputNumber").value);
@@ -234,6 +236,7 @@ const handleSubmit = (e) => {
     cost,
     shippingType,
     roundedCost: Math.ceil(cost),
+    cart,
   };
 
   console.log(orderData);
