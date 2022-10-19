@@ -67,10 +67,11 @@ const poblarComentarios = async (comentarioData) => {
       "comentarios"
     ).innerHTML = `<div id="noComment" class="text-center alert-secondary p-4 rounded-3">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</div>`;
   } else {
+    document.getElementById(
+      "comentarios"
+    ).innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
 
-  document.getElementById("comentarios").innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`
-
-  const comentarios = document.getElementById("comentariosUl")
+    const comentarios = document.getElementById("comentariosUl");
 
     for (let i = 0; i < comentarioData.length; i++) {
       const element = comentarioData[i];
@@ -151,8 +152,10 @@ const comentar = () => {
     document.getElementById("noComment").parentElement.innerHTML = "";
   }
 
-  if (!(document.getElementById("comentariosUl"))) {
-    document.getElementById("comentarios").innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`
+  if (!document.getElementById("comentariosUl")) {
+    document.getElementById(
+      "comentarios"
+    ).innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
   }
 
   document.getElementById("comentariosUl").innerHTML += `
@@ -161,9 +164,7 @@ const comentar = () => {
       <div class="row">
         
         <div class="col-auto p-1">
-          <strong>${localStorage.getItem(
-            "user"
-          )}</strong>
+          <strong>${localStorage.getItem("user")}</strong>
         </div>
 
         <div class="col-auto p-1 d-sm-none d-md-block">-</div>

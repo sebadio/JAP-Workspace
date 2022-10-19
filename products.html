@@ -107,51 +107,52 @@
           </div>
         </div>
         <div class="row">
-            <div class="col-lg-4 d-flex justify-content-center align-items-center">
-              <label for="inputSearch">Busqueda: </label>
+          <div
+            class="col-lg-4 d-flex justify-content-center align-items-center"
+          >
+            <label for="inputSearch">Busqueda: </label>
+            <input
+              class="form-control m-2"
+              type="search"
+              name="search"
+              placeholder="Inserte busqueda"
+              id="searchInput"
+            />
+          </div>
+
+          <div class="col-lg-2"></div>
+
+          <div class="row col-lg-6 gap-1 container p-0 m-0 w-50">
+            <div class="col-lg-1">
+              <p class="font-weight-normal my-2">Cant.</p>
+            </div>
+            <div class="col-lg-3">
               <input
-                class="form-control m-2"
-                type="search"
-                name="search"
-                placeholder="Inserte busqueda"
-                id="searchInput"
+                class="form-control"
+                type="number"
+                placeholder="min."
+                id="rangeFilterCountMin"
               />
             </div>
-
-            <div class="col-lg-2"></div>
-
-            <div class="row col-lg-6 gap-1 container p-0 m-0 w-50">
-              <div class="col-lg-1">
-                <p class="font-weight-normal my-2">Cant.</p>
-              </div>
-              <div class="col-lg-3">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="min."
-                  id="rangeFilterCountMin"
-                />
-              </div>
-              <div class="col-lg-3">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="máx."
-                  id="rangeFilterCountMax"
-                />
-              </div>
-              <div class="col-lg-4 p-0">
-                <div class="btn-group" role="group">
-                  <button class="btn btn-light btn-block" id="rangeFilterCount">
-                    Filtrar
-                  </button>
-                  <button class="btn btn-link btn-sm" id="clearRangeFilter">
-                    Limpiar
-                  </button>
-                </div>
+            <div class="col-lg-3">
+              <input
+                class="form-control"
+                type="number"
+                placeholder="máx."
+                id="rangeFilterCountMax"
+              />
+            </div>
+            <div class="col-lg-4 p-0">
+              <div class="btn-group" role="group">
+                <button class="btn btn-light btn-block" id="rangeFilterCount">
+                  Filtrar
+                </button>
+                <button class="btn btn-link btn-sm" id="clearRangeFilter">
+                  Limpiar
+                </button>
               </div>
             </div>
-          
+          </div>
         </div>
 
         <div id="container" class="row">
