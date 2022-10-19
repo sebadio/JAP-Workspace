@@ -41,7 +41,7 @@ const checkArticles = (articles) => {
 
 const addTable = () => {
   document.getElementById("contenedor").innerHTML = `
-    <table class="table table-striped align-middle">
+    <table class="table table-striped table-group-divider align-middle">
     <thead>
         <tr class="table-dark text-center">
             <th scope="col">Imagen</th>
@@ -53,8 +53,7 @@ const addTable = () => {
         </tr>
     </thead>
     <tbody id="tableBody"></tbody>
-    <foot>
-    </tfoot>
+    <tfoot>
         <tr class="table-dark text-center">
             <th scope="col"></th>
             <th scope="col"></th>
@@ -63,11 +62,8 @@ const addTable = () => {
             <th scope="col" style="font-family: sans-serif;" class="text-wrap" id="sumTotal"></th>
             <th scope="col"></th>
         </tr>
+      </tfoot>
     </table>
-
-    <hr >
-
-    <form id="formulario"></form>
   `;
 };
 
