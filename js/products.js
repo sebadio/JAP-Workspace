@@ -41,11 +41,12 @@ const poblarLista = (products) => {
   // Poblamos la lista con los productos y sus respectivas clases de Bootstrap
   products.map((producto) => {
     lista.innerHTML += `
-      <li class="list-group-item p-2 list-group-item-action cursor-active" onclick="redirectProduct(${producto.id})">
-        <div class="row">
+      <li class="list-group-item list-group-item-action cursor-active" onclick="redirectProduct(${producto.id})">
+        <div class="row p-2">
           <div class="col-lg-3 p-1">
-              <img class="img-fluid" src="${producto.image}" >
+              <img class="img-fluid rounded shadow" src="${producto.image}" >
           </div>
+          <hr class="d-sm-block d-lg-none">
           <div class="col-lg-8" >
               <h2>${producto.name} - ${producto.currency}${producto.cost}</h2>
               <p>${producto.description}</p>
