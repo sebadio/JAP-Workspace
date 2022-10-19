@@ -61,24 +61,43 @@ const fetchFunction = async () => {
 
 // Funcion que agrega los comentarios
 const poblarComentarios = async (comentarioData) => {
-  const comentarios = document.getElementById("comentarios");
-
-  comentarios.innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`;
-
   // Mostramos una alerta o los comentarios, segun si el producto los tiene o no
   if (comentarioData.length === 0 || comentarioData === null) {
     document.getElementById(
-      "comentariosUl"
+      "comentarios"
     ).innerHTML = `<div id="noComment" class="text-center alert-secondary p-4 rounded-3">Este producto no tiene comentarios, ¡pero tu podrias ser ser el primero!</div>`;
   } else {
+
+  document.getElementById("comentarios").innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`
+
+  const comentarios = document.getElementById("comentariosUl")
+
     for (let i = 0; i < comentarioData.length; i++) {
       const element = comentarioData[i];
 
       comentarios.innerHTML += `
     
         <li class="list-group-item">
-            <div class="d-flex gap-2"><span><strong>${element.user}</strong></span> - <div id="stars${i}"></div> <span><small>${element.dateTime}</small></span></div>
-            <div>${element.description}</div>
+            <div class="row">
+              <div class="row">
+                <div class="col-auto p-1">
+                  <strong>${element.user}</strong>
+                </div>
+
+                <div class="col-auto p-1 d-sm-none d-md-block">-</div>
+
+                <div class="col-auto p-1" id="stars${i}"></div>
+
+                <div class="col-auto p-1 d-sm-none d-md-block">-</div>
+
+
+                <small class="col-auto p-1">${element.dateTime}</small>
+              </div>
+
+              <div class="row mt-2">
+                <p class="p-0 m-0 ms-2">${element.description}</p>
+              </div>
+            </div>
         </li>
         `;
 
@@ -132,13 +151,35 @@ const comentar = () => {
     document.getElementById("noComment").parentElement.innerHTML = "";
   }
 
+  if (!(document.getElementById("comentariosUl"))) {
+    document.getElementById("comentarios").innerHTML = `<ul class="list-group" id="comentariosUl"></ul>`
+  }
+
   document.getElementById("comentariosUl").innerHTML += `
-    <li id="ownComment" class="list-group-item transition active">
-        <div class="d-flex gap-2"><span><strong>${localStorage.getItem(
-          "user"
-        )}</strong></span> - <div id="starsOwnComment"></div> <span><small>${time}</small></span></div>
-        <div>${comentarioTexto}</div>
-    </li>
+  <li id="ownComment" class="list-group-item transition active">
+    <div class="row">
+      <div class="row">
+        
+        <div class="col-auto p-1">
+          <strong>${localStorage.getItem(
+            "user"
+          )}</strong>
+        </div>
+
+        <div class="col-auto p-1 d-sm-none d-md-block">-</div>
+
+        <div class="col-auto p-1" id="starsOwnComment"></div>
+
+        <div class="col-auto p-1 d-sm-none d-md-block">-</div>
+        
+        <small class="col-auto p-1">${time}</small>
+      </div>
+
+      <div class="row mt-2">
+          <p class="p-0 m-0 ms-2">${comentarioTexto}</p>
+      </div>
+    </div>
+  </li>
   `;
 
   for (let i = 0; i < 5; i++) {
@@ -202,11 +243,11 @@ const poblar = async () => {
   contenedor.style.marginTop = "2rem";
 
   contenedor.innerHTML = `
-  <p class="m-0">Caregoria / Producto</p>
+  <p class="m-0">Categoria / Producto</p>
   <p>${category} > <span style="font-weight: 600;">${name}</span></p>
 
   <div class="row">
-    <div class="col-8">
+    <div class="col-lg-8">
       <div id="productCarousel" class="carousel carousel-dark slide" data-bs-ride="true">
         <div id="carouselIndicators" class="carousel-indicators">
           <button
@@ -244,21 +285,24 @@ const poblar = async () => {
       </div>
     </div>
   
-    <div class="col-4">
-      <div class="border p-4 rounded h-100">
-        <p class="m-0">Vendidos: ${soldCount}</p>
-        <h2 class="fw-bold">${name}</h2>
-        <hr >
+    <div class="col-lg-4">
+      <div class="d-flex flex-column justify-content-center gap-3 border p-4 rounded h-100">
+
+        <div>
+          <p class="m-0">Vendidos: ${soldCount}</p>
+          <h2 class="fw-bold">${name}</h2>
+          <hr >
+        </div>
+
         
-        <div style="height: 80%;" class="d-flex flex-column justify-content-around">
+        <div class="d-flex gap-4 flex-column justify-content-between">
           <div class="d-flex flex-column">
           <h2>Precio:</h2>
               <div class="d-flex align-items-center fw-bold lh-sm fs-2 font-monospace"><span>${currency}</span>&nbsp<span>${cost}</span></div>
           </div>
 
-          <button class="btn btn-outline-dark fw-bold p-3 rounded-pill w-100" id="addToCart" onclick="handleAddToCart(${id}, '${name}', ${cost}, '${currency}', '${images[0]}')">Agregar al carrito</button>
+          <button class="btn btn-outline-dark fw-bold p-2 rounded-pill w-100" id="addToCart" onclick="handleAddToCart(${id}, '${name}', ${cost}, '${currency}', '${images[0]}')">Agregar al carrito</button>
         </div>
-
       </div>
     </div>
   </div>
@@ -281,7 +325,7 @@ const poblar = async () => {
   </div>
   
   <div class="row my-5">
-    <div class="col-6">
+    <div class="col-lg-6">
       <h3>Comentar</h3>
       <div id="formComment" class="d-flex flex-column">
         <p class="mt-3 mb-1">Tu opinión:</p>
@@ -306,15 +350,15 @@ const poblar = async () => {
         </button>
       </div>
     </div>
-    <div class="col-3"></div>
-    <div class="col-3"></div>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-3"></div>
   </div>
 
   <hr >
   
   <div class="row mt-4">
     <h2>Productos Relacionados</h2>
-    <div class="container d-flex gap-4" id="related"></div>
+    <div class="container d-flex flex-wrap gap-4" id="related"></div>
   </div>
   `;
 
@@ -340,7 +384,7 @@ const poblar = async () => {
 
     document.getElementById("related").innerHTML += `    
     <div class="card" style="width: 18rem;">
-        <img src="${element.image}" class="card-img-top" alt="...">
+        <img src="${element.image}" class="card-img-top" alt="imagen de ${element.name}">
         <div class="card-body">
             <h5 class="card-title">${element.name}</h5>
             <a href="product-info.html" onclick="redirect(${element.id})" class="btn btn-primary">Ver Producto</a>
