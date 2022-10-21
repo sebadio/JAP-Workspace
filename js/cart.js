@@ -11,9 +11,9 @@ const addTableData = async () => {
 
   addTableItems(articles);
 
-  handleSumTotal();
-
   addForm();
+
+  handleSumTotal();
 };
 
 /* Funcion que chequea si tenemos datos en el carrito y muestra una alerta si no tenemos nada */
@@ -41,7 +41,7 @@ const checkArticles = (articles) => {
 
 const addTable = () => {
   document.getElementById("contenedor").innerHTML = `
-    <table class="table table-striped table-group-divider align-middle">
+    <table class="table table-striped align-middle">
     <thead>
         <tr class="table-dark text-center">
             <th scope="col">Imagen</th>
@@ -53,16 +53,6 @@ const addTable = () => {
         </tr>
     </thead>
     <tbody id="tableBody"></tbody>
-    <tfoot>
-        <tr class="table-dark text-center">
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-            <th scope="col">Total:</th>
-            <th scope="col" style="font-family: sans-serif;" class="text-wrap" id="sumTotal"></th>
-            <th scope="col"></th>
-        </tr>
-      </tfoot>
     </table>
   `;
 };
@@ -87,10 +77,10 @@ const addTableItems = (articles) => {
         <td class="fw-bold">${name}</td>
         <td class="text-nowrap" style="font-family: sans-serif;">${currency} ${costo}</td>
         <td><input min="1" class="form-control w-50 text-start mx-auto" onchange="updatePrice(${id}, '${currency}', '${costo}')" id="count${id}" type="number" value="${count}" ></td>
-        <td id="subtotal${id}" style="font-family: sans-serif;" class="fw-bolder text-nowrap subtotal">${currency} ${
+        <td id="subtotal${id}" style="font-family: sans-serif;" class="fw-bolder text-nowrap" data-subtotal="${currency}">${currency} ${
       costo * count
     }</td>
-    <td><button onclick="handleRemoveItem(${id})" class="btn btn-outline-dark"><i class="fas fa-times"></i></button></td>
+      <td><button onclick="handleRemoveItem(${id})" class="btn btn-outline-danger"><i class="fas fa-trash-alt"></i></button></td>
     </tr>
     `;
   }
@@ -106,7 +96,7 @@ const handleRemoveItem = (id) => {
   localStorage.setItem("cart", JSON.stringify(articles));
 
   addTableItems(articles);
-  if (articles && Object.keys(articles) > 0) {
+  if (articles || Object.keys(articles) > 0) {
     handleSumTotal();
   }
 };
@@ -114,7 +104,7 @@ const handleRemoveItem = (id) => {
 /* Funcion que actualiza el precio */
 
 const updatePrice = (id, currency, costo) => {
-  const cant = document.getElementById("count" + id).value;
+  const cant = Number(document.getElementById("count" + id).value);
 
   const cart = JSON.parse(localStorage.getItem("cart"));
 
@@ -132,26 +122,40 @@ const updatePrice = (id, currency, costo) => {
 /* Funcion que calcula y actualiza el precio total */
 
 const handleSumTotal = () => {
-  const subtotales = document.querySelectorAll(".subtotal");
+  const premiumShipping = document.getElementById("premiumShipping");
+  const expresShiping = document.getElementById("expresShiping");
+  const standardShipping = document.getElementById("standardShipping");
+
+  let shipping;
+
+  if (premiumShipping.checked) shipping = premiumShipping.value;
+  if (expresShiping.checked) shipping = expresShiping.value;
+  if (standardShipping.checked) shipping = standardShipping.value;
+
+  const subtotales = document.querySelectorAll("[data-subtotal]");
 
   let sumTotal = 0;
 
   for (let i = 0; i < subtotales.length; i++) {
-    const element = document
-      .querySelectorAll(".subtotal")
-      [i].innerHTML.split(" ");
+    const element = subtotales[i].innerHTML.split(" ");
 
     let price = Number(element[1]);
 
     if (element[0] === "UYU") {
-      price = element[1] / 40;
+      price = price / 40;
     }
 
     sumTotal += Number(price);
   }
+  const shippingPrice = sumTotal * Number(shipping);
 
-  document.getElementById("sumTotal").setAttribute("value", sumTotal);
   document.getElementById("sumTotal").innerHTML = `USD ${Math.round(sumTotal)}`;
+  document.getElementById("shippingCost").innerHTML = `USD ${Math.round(
+    shippingPrice
+  )}`;
+  document.getElementById("total").innerHTML = `<strong>USD ${Math.round(
+    sumTotal + shippingPrice
+  )}</strong>`;
 };
 
 /* Funcion que agrega el formulario a la pagina */
@@ -161,19 +165,20 @@ const addForm = () => {
           <h4>Tipo de envio</h4>
   
           <div class="form-check">
-              <input type="radio" class="form-check-input" id="premiumShipping" name="optradio" value="premium" checked>
-              <label class="form-check-label" for="premiumShipping">Premium 2 a 5 días (15%)</label>
+            <input type="radio" data-radio="radio" class="form-check-input" id="premiumShipping" name="optradio" value="0.15" checked>
+            <label class="form-check-label" for="premiumShipping">Premium 2 a 5 días (15%)</label>
           </div>
           <div class="form-check">
-              <input type="radio" class="form-check-input" id="expresShiping" name="optradio" value="express">
-              <label class="form-check-label" for="expresShiping">Express 5 a 8 días (7%)</label>
+            <input type="radio" data-radio="radio" class="form-check-input" id="expresShiping" name="optradio" value="0.07">
+            <label class="form-check-label" for="expresShiping">Express 5 a 8 días (7%)</label>
           </div>
           <div class="form-check">
-              <input type="radio" class="form-check-input" id="standardShipping" name="optradio" value="standard">
-              <label class="form-check-label" for="standardShipping">Standard 12 a 15 días (5%)</label>
+            <input type="radio" data-radio="radio" class="form-check-input" id="standardShipping" name="optradio" value="0.05">
+            <label class="form-check-label" for="standardShipping">Standard 12 a 15 días (5%)</label>
           </div>
   
           <div class="row mt-4">
+              <h4>Dirección de envío</h4>
               <div class="col-6">
                   <label class="form-check-label">Calle</label>
                   <input class="form-control" id="inputCalle" required minlength="3" type="text">
@@ -185,9 +190,79 @@ const addForm = () => {
                   <input class="form-control" id="inputNumber" required min="1" type="number">
               </div>
           </div>
+
+          <hr class="my-5" />
+
+          <div class="row">
+            <h4>Costos</h4>
+            <ul class="list-group">
+              <li class="list-group-item">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-auto">
+                    <h5>Subtotal</h5>
+                    <p class="m-0">Suma de costos de productos</p> 
+                  </div>
+
+                  <div class="col-auto d-flex align-items-center">
+                    <p class="m-0 text-wrap" style="font-family: sans-serif;" id="sumTotal"></p>
+                  </div>
+                </div>
+              </li>
+
+              <li class="list-group-item">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-auto">
+                    <h5>Costo de envio</h5>
+                    <p class="m-0">Según el tipo de envio</p> 
+                  </div>
+
+                  <div class="col-auto d-flex align-items-center">
+                    <p class="m-0 text-wrap" style="font-family: sans-serif;" id="shippingCost"></p>
+                  </div>
+                </div>
+              </li>
+
+              <li class="list-group-item">
+                <div class="row d-flex justify-content-between">
+                  <div class="col-auto">
+                    <h5>Total</h5>
+                    <p class="m-0">Total en dolares</p> 
+                  </div>
+
+                  <div class="col-auto d-flex align-items-center">
+                    <p class="m-0 text-wrap" style="font-family: sans-serif;" id="total"></p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+      
+          <hr class="my-5" />
+
+          <div class="row">
+            <h4>Forma de pago</h4>
+            <p id="metodoDePagoP">${
+              localStorage.getItem("metodoDePago")
+                ? `Metodo de pago seleccionado: ${
+                    JSON.parse(localStorage.getItem("metodoDePago")).type
+                  }`
+                : "Seleccione metodo de pago"
+            }</p>
+            <a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#pago">
+              Seleccionar Metodo de pago
+            </a>
+          </div>
   
-          <button class="btn btn-outline-dark fw-bold mt-4" type="submit">Comprar</button>
+          <div class="row">          
+            <button class="btn btn-outline-dark fw-bold mt-4" type="submit">Comprar</button>
+          </div>
       `;
+
+  document.querySelectorAll("[data-radio]").forEach((element) =>
+    element.addEventListener("change", (e) => {
+      handleSumTotal(e.target.value);
+    })
+  );
 
   document.getElementById("formulario").addEventListener("submit", (e) => {
     handleSubmit(e);
@@ -210,6 +285,7 @@ const handleSubmit = (e) => {
   const esquina = document.getElementById("inputEsquina").value;
   const cost = document.getElementById("sumTotal").getAttribute("value");
   const currency = document.getElementById("sumTotal").innerHTML.split(" ")[0];
+  const roundedCost = Math.round(cost);
   let shippingType;
 
   if (premiumShipping) {
@@ -231,7 +307,7 @@ const handleSubmit = (e) => {
     currency,
     cost,
     shippingType,
-    roundedCost: Math.ceil(cost),
+    roundedCost,
     cart,
   };
 
@@ -242,4 +318,74 @@ const handleSubmit = (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   addTableData();
+
+  const formularioTarjeta = document.getElementById("formularioTarjeta");
+
+  const numTarjeta = document.getElementById("numTarjeta");
+  const codigoSeg = document.getElementById("codigoSeg");
+  const vencimiento = document.getElementById("vencimientoTarjeta");
+  const numCuenta = document.getElementById("numCuenta");
+
+  const date = new Date();
+  document.getElementById("vencimientoTarjeta").min = `${date.getFullYear()}-${
+    date.getMonth() + 1 < 10
+      ? "0" + String(date.getMonth() + 1)
+      : date.getMonth() + 1
+  }`;
+
+  formularioTarjeta.addEventListener("submit", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    formularioTarjeta.classList.add("was-validated");
+    if (formularioTarjeta.checkValidity()) {
+      if (document.getElementById("tarjetaCheckbox").checked) {
+        const numTarjetaValue = numTarjeta.value;
+        const codigoSegValue = codigoSeg.value;
+        const vencimientoValue = vencimiento.value;
+
+        const tarjeta = { numTarjetaValue, codigoSegValue, vencimientoValue };
+
+        console.log(tarjeta);
+
+        localStorage.setItem(
+          "metodoDePago",
+          JSON.stringify({
+            numTarjetaValue,
+            codigoSegValue,
+            vencimientoValue,
+            type: "Tarjeta",
+          })
+        );
+      } else {
+        const numCuentaValue = numCuenta.value;
+
+        localStorage.setItem(
+          "metodoDePago",
+          JSON.stringify({ numCuentaValue, type: "Cuenta Bancaria" })
+        );
+      }
+
+      document.getElementById(
+        "metodoDePagoP"
+      ).innerHTML = `Metodo de pago seleccionado: ${
+        JSON.parse(localStorage.getItem("metodoDePago")).type
+      }`;
+    }
+  });
+
+  document.getElementById("tarjetaCheckbox").addEventListener("change", () => {
+    numTarjeta.removeAttribute("disabled");
+    codigoSeg.removeAttribute("disabled");
+    vencimiento.removeAttribute("disabled");
+
+    numCuenta.setAttribute("disabled", "true");
+  });
+
+  document.getElementById("cuentaCheckbox").addEventListener("change", () => {
+    numCuenta.removeAttribute("disabled");
+
+    numTarjeta.setAttribute("disabled", "true");
+    codigoSeg.setAttribute("disabled", "true");
+    vencimiento.setAttribute("disabled", "true");
+  });
 });
