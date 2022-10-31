@@ -453,6 +453,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const vencimiento = document.getElementById("vencimientoTarjeta");
   const numCuenta = document.getElementById("numCuenta");
 
+  const formModal = new bootstrap.Modal(document.getElementById("pago"));
+
   const date = new Date();
   document.getElementById("vencimientoTarjeta").min = `${date.getFullYear()}-${
     date.getMonth() + 1 < 10
@@ -506,6 +508,9 @@ document.addEventListener("DOMContentLoaded", () => {
           .getElementById("formaPagoAbreModal")
           .classList.add("text-success");
       }
+
+      console.log(formModal);
+      formModal.hide();
     }
   });
 
