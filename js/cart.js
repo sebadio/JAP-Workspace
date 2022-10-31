@@ -435,8 +435,14 @@ const handleSubmit = () => {
   Object.keys(cart).forEach((element) => {
     const current = cart[element];
 
+    console.log(current);
+
     document.getElementById("products").innerHTML += `
-      <li class="list-group-item d-flex justify-content-between"><span>${current.name}</span> <span>${current.costo} ${current.currency}</span></li>
+      <li class="list-group-item d-flex justify-content-between"><span>${
+        current.name
+      } x ${current.count}</span> <span>${current.costo * current.count} ${
+      current.currency
+    }</span></li>
     `;
   });
 };
