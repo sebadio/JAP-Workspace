@@ -153,7 +153,9 @@ const handleSumTotal = () => {
   document.getElementById("shippingCost").innerHTML = `USD ${Math.round(
     shippingPrice
   )}`;
-  document.getElementById("total").innerHTML = `<strong>USD ${Math.round(
+  document.getElementById(
+    "total"
+  ).innerHTML = `<strong id="actualTotal">USD ${Math.round(
     sumTotal + shippingPrice
   )}</strong>`;
 };
@@ -163,32 +165,95 @@ const handleSumTotal = () => {
 const addForm = () => {
   document.getElementById("formulario").innerHTML = `
           <h4>Tipo de envio</h4>
-  
-          <div class="form-check">
-            <input type="radio" data-radio="radio" class="form-check-input" id="premiumShipping" name="optradio" value="0.15" checked>
-            <label class="form-check-label" for="premiumShipping">Premium 2 a 5 días (15%)</label>
+
+          <div>
+            <div class="form-check">
+              <input
+                type="radio"
+                data-radio="radio"
+                class="form-check-input"
+                id="premiumShipping"
+                name="optradio"
+                value="0.15"
+                checked
+              />
+              <label class="form-check-label" for="premiumShipping"
+                >Premium 2 a 5 días (15%)</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="radio"
+                data-radio="radio"
+                class="form-check-input"
+                id="expresShiping"
+                name="optradio"
+                value="0.07"
+              />
+              <label class="form-check-label" for="expresShiping"
+                >Express 5 a 8 días (7%)</label
+              >
+            </div>
+            <div class="form-check">
+              <input
+                type="radio"
+                data-radio="radio"
+                class="form-check-input"
+                id="standardShipping"
+                name="optradio"
+                value="0.05"
+              />
+              <label class="form-check-label" for="standardShipping"
+                >Standard 12 a 15 días (5%)</label
+              >
+            </div>
+
+            <div class="invalid-feedback">Por favor seleccione una opcion</div>
           </div>
-          <div class="form-check">
-            <input type="radio" data-radio="radio" class="form-check-input" id="expresShiping" name="optradio" value="0.07">
-            <label class="form-check-label" for="expresShiping">Express 5 a 8 días (7%)</label>
-          </div>
-          <div class="form-check">
-            <input type="radio" data-radio="radio" class="form-check-input" id="standardShipping" name="optradio" value="0.05">
-            <label class="form-check-label" for="standardShipping">Standard 12 a 15 días (5%)</label>
-          </div>
-  
+
           <div class="row mt-4">
-              <h4>Dirección de envío</h4>
-              <div class="col-6">
-                  <label class="form-check-label">Calle</label>
-                  <input class="form-control" id="inputCalle" required minlength="3" type="text">
-                  <label class="form-check-label mt-2">Esquina</label>
-                  <input class="form-control" id="inputEsquina" required minlength="3" type="text">
-                  </div>
-              <div class="col-4">    
-                  <label class="form-check-label">Número</label>
-                  <input class="form-control" id="inputNumber" required min="1" type="number">
+            <h4>Dirección de envío</h4>
+            <div class="col-6">
+              <div>
+                <label class="form-check-label">Calle</label>
+                <input
+                  class="form-control"
+                  id="inputCalle"
+                  required
+                  minlength="3"
+                  type="text"
+                />
+
+                <div class="invalid-feedback">Por favor ingrese una calle valida.</div>
               </div>
+
+              <div>
+                <label class="form-check-label mt-2">Esquina</label>
+                <input
+                  class="form-control"
+                  id="inputEsquina"
+                  required
+                  minlength="3"
+                  type="text"
+                />
+
+                <div class="invalid-feedback">Por favor ingrese una esquina valida.</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div>
+                <label class="form-check-label">Número</label>
+                <input
+                  class="form-control"
+                  id="inputNumber"
+                  required
+                  min="1"
+                  type="number"
+                />
+
+                <div class="invalid-feedback">Por favor ingrese un numero valido.</div>
+              </div>
+            </div>
           </div>
 
           <hr class="my-5" />
@@ -200,11 +265,15 @@ const addForm = () => {
                 <div class="row d-flex justify-content-between">
                   <div class="col-auto">
                     <h5>Subtotal</h5>
-                    <p class="m-0">Suma de costos de productos</p> 
+                    <p class="m-0">Suma de costos de productos</p>
                   </div>
 
                   <div class="col-auto d-flex align-items-center">
-                    <p class="m-0 text-wrap" style="font-family: sans-serif;" id="sumTotal"></p>
+                    <p
+                      class="m-0 text-wrap"
+                      style="font-family: sans-serif"
+                      id="sumTotal"
+                    ></p>
                   </div>
                 </div>
               </li>
@@ -213,11 +282,15 @@ const addForm = () => {
                 <div class="row d-flex justify-content-between">
                   <div class="col-auto">
                     <h5>Costo de envio</h5>
-                    <p class="m-0">Según el tipo de envio</p> 
+                    <p class="m-0">Según el tipo de envio</p>
                   </div>
 
                   <div class="col-auto d-flex align-items-center">
-                    <p class="m-0 text-wrap" style="font-family: sans-serif;" id="shippingCost"></p>
+                    <p
+                      class="m-0 text-wrap"
+                      style="font-family: sans-serif"
+                      id="shippingCost"
+                    ></p>
                   </div>
                 </div>
               </li>
@@ -226,35 +299,43 @@ const addForm = () => {
                 <div class="row d-flex justify-content-between">
                   <div class="col-auto">
                     <h5>Total</h5>
-                    <p class="m-0">Total en dolares</p> 
+                    <p class="m-0">Total en dolares</p>
                   </div>
 
                   <div class="col-auto d-flex align-items-center">
-                    <p class="m-0 text-wrap" style="font-family: sans-serif;" id="total"></p>
+                    <p
+                      class="m-0 text-wrap"
+                      style="font-family: sans-serif"
+                      id="total"
+                    ></p>
                   </div>
                 </div>
               </li>
             </ul>
           </div>
-      
+
           <hr class="my-5" />
 
           <div class="row">
             <h4>Forma de pago</h4>
             <p id="metodoDePagoP">${
               localStorage.getItem("metodoDePago")
-                ? `Metodo de pago seleccionado: ${
+                ? `<span class="text-success">Metodo de pago seleccionado: ${
                     JSON.parse(localStorage.getItem("metodoDePago")).type
-                  }`
+                  }</span>`
                 : "Seleccione metodo de pago"
             }</p>
-            <a href="#" class="link-primary" data-bs-toggle="modal" data-bs-target="#pago">
+            <a href="#" id="formaPagoAbreModal" class="link-primary" data-bs-toggle="modal" data-bs-target="#pago">
               Seleccionar Metodo de pago
             </a>
           </div>
   
-          <div class="row">          
-            <button class="btn btn-outline-dark fw-bold mt-4" type="submit">Comprar</button>
+          <div class="row mt-2">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">  
+              <button class="btn btn-outline-dark fw-bold mt-4 w-100" type="submit">Comprar</button>
+            </div>
+            <div class="col-lg-4"></div>
           </div>
       `;
 
@@ -265,40 +346,45 @@ const addForm = () => {
   );
 
   document.getElementById("formulario").addEventListener("submit", (e) => {
-    handleSubmit(e);
+    e.preventDefault();
+    e.stopPropagation();
+
+    const metodoPago = localStorage.getItem("metodoDePago");
+    if (
+      !document.getElementById("formulario").className.includes("was-validated")
+    ) {
+      document.getElementById("formulario").classList.add("was-validated");
+    }
+
+    if (!metodoPago) {
+      document
+        .getElementById("formaPagoAbreModal")
+        .classList.add("text-danger");
+      return;
+    }
+
+    if (document.getElementById("formulario").checkValidity() && metodoPago) {
+      handleSubmit();
+    }
   });
 };
 
 /* Funcion que se encarga de manejar los datos del formulario al ser enviado */
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-
-  const premiumShipping = document.getElementById("premiumShipping").checked;
-  const expresShiping = document.getElementById("expresShiping").checked;
-  const standardShipping = document.getElementById("standardShipping").checked;
-
+const handleSubmit = () => {
   const cart = JSON.parse(localStorage.getItem("cart"));
 
   const calle = document.getElementById("inputCalle").value;
   const numero = Number(document.getElementById("inputNumber").value);
   const esquina = document.getElementById("inputEsquina").value;
-  const cost = document.getElementById("sumTotal").getAttribute("value");
-  const currency = document.getElementById("sumTotal").innerHTML.split(" ")[0];
+  const cost = Number(
+    document.getElementById("actualTotal").innerHTML.split(" ")[1]
+  );
+  const currency = document
+    .getElementById("actualTotal")
+    .innerHTML.split(" ")[0];
   const roundedCost = Math.round(cost);
-  let shippingType;
-
-  if (premiumShipping) {
-    shippingType = "premium";
-  }
-
-  if (expresShiping) {
-    shippingType = "express";
-  }
-
-  if (standardShipping) {
-    shippingType = "standard";
-  }
+  const shippingType = checkShippingType();
 
   const orderData = {
     calle,
@@ -311,7 +397,48 @@ const handleSubmit = (e) => {
     cart,
   };
 
-  console.log(orderData);
+  document.getElementById("container").innerHTML = `
+    <div class="row mt-4">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">  
+        <h2>Compra realizada con exito</h2>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">  
+        <p>Los articulos seran enviados a: <br /> ${calle} ${numero} esquina ${esquina}</p>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">  
+        <ul class="list-group" id="products"></ul>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+
+    
+    <div class="row mt-2">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">  
+        <p class="text-center">El Total fue de: <strong>${cost} USD</strong></p>
+      </div>
+      <div class="col-lg-3"></div>
+    </div>
+  `;
+
+  Object.keys(cart).forEach((element) => {
+    const current = cart[element];
+
+    document.getElementById("products").innerHTML += `
+      <li class="list-group-item d-flex justify-content-between"><span>${current.name}</span> <span>${current.costo} ${current.currency}</span></li>
+    `;
+  });
 };
 
 /* Escuchamos a cuando el DOM se cargue para llamar a la funcion principal */
@@ -343,19 +470,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const codigoSegValue = codigoSeg.value;
         const vencimientoValue = vencimiento.value;
 
-        const tarjeta = { numTarjetaValue, codigoSegValue, vencimientoValue };
+        const tarjeta = {
+          numTarjetaValue,
+          codigoSegValue,
+          vencimientoValue,
+          type: "Tarjeta",
+        };
 
-        console.log(tarjeta);
-
-        localStorage.setItem(
-          "metodoDePago",
-          JSON.stringify({
-            numTarjetaValue,
-            codigoSegValue,
-            vencimientoValue,
-            type: "Tarjeta",
-          })
-        );
+        localStorage.setItem("metodoDePago", JSON.stringify(tarjeta));
       } else {
         const numCuentaValue = numCuenta.value;
 
@@ -370,6 +492,20 @@ document.addEventListener("DOMContentLoaded", () => {
       ).innerHTML = `Metodo de pago seleccionado: ${
         JSON.parse(localStorage.getItem("metodoDePago")).type
       }`;
+
+      if (
+        document
+          .getElementById("formaPagoAbreModal")
+          .className.includes("text-danger")
+      ) {
+        document
+          .getElementById("formaPagoAbreModal")
+          .classList.remove("text-danger");
+
+        document
+          .getElementById("formaPagoAbreModal")
+          .classList.add("text-success");
+      }
     }
   });
 
@@ -389,3 +525,25 @@ document.addEventListener("DOMContentLoaded", () => {
     vencimiento.setAttribute("disabled", "true");
   });
 });
+
+const checkShippingType = () => {
+  const premiumShipping = document.getElementById("premiumShipping").checked;
+  const expresShiping = document.getElementById("expresShiping").checked;
+  const standardShipping = document.getElementById("standardShipping").checked;
+
+  let shippingType;
+
+  if (premiumShipping) {
+    shippingType = "premium";
+  }
+
+  if (expresShiping) {
+    shippingType = "express";
+  }
+
+  if (standardShipping) {
+    shippingType = "standard";
+  }
+
+  return shippingType;
+};
