@@ -11,7 +11,7 @@ const addTableData = async () => {
 
   addTableItems(articles);
 
-  addForm();
+  addFormData();
 
   handleSumTotal();
 };
@@ -32,6 +32,7 @@ const checkArticles = (articles) => {
                 No tienes nada en tu carrito <a class="text-white fw-bold" href="categories.html">Empieza a comprar ahora!</a>
             </div>
             `;
+    document.getElementById("contenedorForm").innerHTML = ``;
     return true;
   }
   return false;
@@ -147,7 +148,7 @@ const handleSumTotal = () => {
 
 /* Funcion que agrega el formulario a la pagina */
 
-const addForm = () => {
+const addFormData = () => {
   const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
 
   if (user.adress) {

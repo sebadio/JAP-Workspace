@@ -157,7 +157,6 @@ const comentar = () => {
   <li id="ownComment" class="list-group-item transition active">
     <div class="row">
       <div class="row">
-        
         <div class="col-auto p-1">
           <strong>${
             user.firstName
@@ -165,16 +164,11 @@ const comentar = () => {
               : user.email
           }</strong>
         </div>
-
         <div class="col-auto p-1 d-sm-none d-md-block">-</div>
-
         <div class="col-auto p-1" id="starsOwnComment"></div>
-
-        <div class="col-auto p-1 d-sm-none d-md-block">-</div>
-        
+        <div class="col-auto p-1 d-sm-none d-md-block">-</div>        
         <small class="col-auto p-1">${time}</small>
       </div>
-
       <div class="row mt-2">
           <p class="p-0 m-0 ms-2">${comentarioTexto}</p>
       </div>
@@ -299,7 +293,6 @@ poblar();
 
 const handleAddToCart = (id, name, costo, currency, imagen) => {
   const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
-  console.log(user);
 
   if (user.cart) {
     if (user.cart[id]) {
