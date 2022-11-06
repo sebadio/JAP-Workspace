@@ -76,10 +76,10 @@
     <main>
       <div class="container">
         <div class="row mt-2 d-flex align-items-center">
-          <div class="col-lg-6">
+          <div class="col-6">
             <h2>Perfil</h2>
           </div>
-          <div class="col-lg-6 d-flex justify-content-end">
+          <div class="col-6 d-flex justify-content-end">
             <img
               style="height: 8rem"
               src=""
@@ -96,7 +96,9 @@
           <div class="row mt-4">
             <div class="col-lg-6">
               <div>
-                <label for="firstName">Primer Nombre *</label>
+                <label for="firstName"
+                  >Primer Nombre <span class="text-danger fs-4">*</span></label
+                >
                 <input
                   placeholder="Primer nombre"
                   class="form-control"
@@ -132,7 +134,10 @@
           <div class="row mt-4">
             <div class="col-lg-6">
               <div>
-                <label for="firstLastName">Primer Apellido *</label>
+                <label for="firstLastName"
+                  >Primer Apellido
+                  <span class="text-danger fs-4">*</span></label
+                >
                 <input
                   placeholder="Primer apellido"
                   class="form-control"
@@ -149,14 +154,13 @@
             </div>
             <div class="col-lg-6">
               <div>
-                <label for="secondLastName">Segundo Apellido *</label>
+                <label for="secondLastName">Segundo Apellido</label>
                 <input
                   placeholder="Segundo Apellido"
                   class="form-control"
                   type="text"
                   name="secondLastName"
                   id="secondLastName"
-                  required
                   minlength="1"
                 />
                 <div class="invalid-feedback">
@@ -169,7 +173,9 @@
           <div class="row mt-4">
             <div class="col-lg-6">
               <div>
-                <label for="email">Email *</label>
+                <label for="email"
+                  >Email <span class="text-danger fs-4">*</span></label
+                >
                 <input
                   placeholder="ejemplo@mail.com"
                   class="form-control"
@@ -187,14 +193,13 @@
 
             <div class="col-lg-6">
               <div>
-                <label for="telefono">Telefono *</label>
+                <label for="telefono">Telefono</label>
                 <input
                   placeholder="xxxxxxxxx"
                   class="form-control"
                   type="tel"
                   name="telefono"
                   id="telefono"
-                  required
                   minlength="9"
                   maxlength="9"
                   pattern="[0-9]+"
