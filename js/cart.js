@@ -1,7 +1,9 @@
 /* Funcion que llama a todas las demas funciones */
 
 const addTableData = async () => {
-  const articles = JSON.parse(localStorage.getItem("cart"));
+  const articles = JSON.parse(
+    localStorage.getItem(localStorage.getItem("user"))
+  ).cart;
 
   if (checkArticles(articles)) {
     return;
@@ -89,11 +91,15 @@ const addTableItems = (articles) => {
 /* Funcion que usamos para remover un item de el carrito */
 
 const handleRemoveItem = (id) => {
-  let articles = JSON.parse(localStorage.getItem("cart"));
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
+  let articles = user.cart;
 
   delete articles[id];
 
-  localStorage.setItem("cart", JSON.stringify(articles));
+  localStorage.setItem(
+    localStorage.getItem("user"),
+    JSON.stringify({ ...user, cart: articles })
+  );
 
   addTableItems(articles);
   if (articles || Object.keys(articles) > 0) {
@@ -106,11 +112,12 @@ const handleRemoveItem = (id) => {
 const updatePrice = (id, currency, costo) => {
   const cant = Number(document.getElementById("count" + id).value);
 
-  const cart = JSON.parse(localStorage.getItem("cart"));
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
+  const cart = user.cart;
 
   cart[id].count = cant;
 
-  localStorage.setItem("cart", JSON.stringify(cart));
+  localStorage.setItem(user.email, JSON.stringify({ ...user, cart }));
 
   document.getElementById("subtotal" + id).innerHTML = `${currency} ${
     costo * cant
@@ -319,9 +326,12 @@ const addForm = () => {
           <div class="row">
             <h4>Forma de pago</h4>
             <p id="metodoDePagoP">${
-              localStorage.getItem("metodoDePago")
+              JSON.parse(localStorage.getItem(localStorage.getItem("user")))
+                .metodoPago
                 ? `<span class="text-success">Metodo de pago seleccionado: ${
-                    JSON.parse(localStorage.getItem("metodoDePago")).type
+                    JSON.parse(
+                      localStorage.getItem(localStorage.getItem("user"))
+                    ).metodoPago.type
                   }</span>`
                 : "Seleccione metodo de pago"
             }</p>
@@ -372,7 +382,8 @@ const addForm = () => {
 /* Funcion que se encarga de manejar los datos del formulario al ser enviado */
 
 const handleSubmit = () => {
-  const cart = JSON.parse(localStorage.getItem("cart"));
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
+  const cart = user.cart;
 
   const calle = document.getElementById("inputCalle").value;
   const numero = Number(document.getElementById("inputNumber").value);
@@ -485,20 +496,33 @@ document.addEventListener("DOMContentLoaded", () => {
           type: "Tarjeta",
         };
 
-        localStorage.setItem("metodoDePago", JSON.stringify(tarjeta));
+        const user = JSON.parse(
+          localStorage.getItem(localStorage.getItem("user"))
+        );
+        localStorage.setItem(
+          user.email,
+          JSON.stringify({ ...user, metodoPago: tarjeta })
+        );
       } else {
         const numCuentaValue = numCuenta.value;
 
+        const user = JSON.parse(
+          localStorage.getItem(localStorage.getItem("user"))
+        );
         localStorage.setItem(
-          "metodoDePago",
-          JSON.stringify({ numCuentaValue, type: "Cuenta Bancaria" })
+          user.email,
+          JSON.stringify({
+            ...user,
+            metodoPago: { type: "Cuenta Bancaria", numCuentaValue },
+          })
         );
       }
 
       document.getElementById(
         "metodoDePagoP"
       ).innerHTML = `Metodo de pago seleccionado: ${
-        JSON.parse(localStorage.getItem("metodoDePago")).type
+        JSON.parse(localStorage.getItem(localStorage.getItem("user")))
+          .metodoPago.type
       }`;
 
       if (

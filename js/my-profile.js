@@ -26,12 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* Ponemos los datos existentes en los inputs */
 
-  document.getElementById("firstName").value = user.firstName;
-  document.getElementById("secondName").value = user.secondName;
-  document.getElementById("firstLastName").value = user.firstLastName;
-  document.getElementById("secondLastName").value = user.secondLastName;
-  document.getElementById("telefono").value = user.tel;
-  document.getElementById("email").value = user.email;
+  document.getElementById("firstName").value = user.firstName || "";
+  document.getElementById("secondName").value = user.secondName || "";
+  document.getElementById("firstLastName").value = user.firstLastName || "";
+  document.getElementById("secondLastName").value = user.secondLastName || "";
+  document.getElementById("telefono").value = user.tel || "";
+  document.getElementById("email").value = user.email || "";
 
   /* Agarramos el formulario y le agregamos el event listener */
   const form = document.getElementById("formulario");

@@ -403,37 +403,27 @@ const poblar = async () => {
 poblar();
 
 const handleAddToCart = (id, name, costo, currency, imagen) => {
-  const cart = JSON.parse(localStorage.getItem("cart"));
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
+  console.log(user);
 
-  if (!cart) {
-    localStorage.setItem(
-      "cart",
-      JSON.stringify({
-        [id]: {
-          id,
-          name,
-          costo,
-          currency,
-          imagen,
-          count: 1,
-        },
-      })
-    );
-  } else {
-    if (cart[id]) {
+  if (user.cart) {
+    if (user.cart[id]) {
       document.getElementById("container").innerHTML += `
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-          Este articulo ya esta en tu carrito
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      `;
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Este articulo ya esta en tu carrito
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        `;
       return;
     }
+  }
 
-    localStorage.setItem(
-      "cart",
-      JSON.stringify({
-        ...cart,
+  localStorage.setItem(
+    user.email,
+    JSON.stringify({
+      ...user,
+      cart: {
+        ...user.cart,
         [id]: {
           id,
           name,
@@ -442,9 +432,9 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
           imagen,
           count: 1,
         },
-      })
-    );
-  }
+      },
+    })
+  );
 
   document.getElementById("container").innerHTML += `
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -459,7 +449,9 @@ const handleAddToCart = (id, name, costo, currency, imagen) => {
 };
 
 const checkIfAlreadyOnList = (id) => {
-  const cart = JSON.parse(localStorage.getItem("cart"));
+  const cart = JSON.parse(
+    localStorage.getItem(localStorage.getItem("user"))
+  ).cart;
 
   if (cart) {
     if (cart[id]) {
