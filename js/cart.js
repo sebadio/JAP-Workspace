@@ -10,9 +10,7 @@ const addTableData = async () => {
   }
 
   addTableItems(articles);
-
   addFormData();
-
   handleSumTotal();
 };
 
@@ -230,7 +228,8 @@ const handleSubmit = () => {
     esquina,
   };
 
-  localStorage.setItem(user.email, JSON.stringify(user));
+  /* Borramos los items del carrito, porque ya fueron comprados */
+  localStorage.setItem(user.email, JSON.stringify({ ...user, cart: {} }));
 
   document.getElementById("container").innerHTML = `
     <div class="row mt-4">
@@ -269,8 +268,6 @@ const handleSubmit = () => {
 
   Object.keys(cart).forEach((element) => {
     const current = cart[element];
-
-    console.log(current);
 
     document.getElementById("products").innerHTML += `
       <li class="list-group-item d-flex justify-content-between"><span>${
@@ -363,7 +360,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .classList.add("text-success");
       }
 
-      console.log(formModal);
       formModal.hide();
     }
   });

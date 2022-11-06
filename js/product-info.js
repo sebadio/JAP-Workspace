@@ -95,6 +95,7 @@ const poblarComentarios = async (comentarioData) => {
         </li>
         `;
 
+      /* Agregamos las estrellas al comentario */
       for (let x = 0; x < 5; x++) {
         document.getElementById(`stars${i}`).innerHTML +=
           x < element.score
@@ -208,8 +209,6 @@ const formListener = () => {
 
 // Funcion que modifica el container para mostrar la info del producto seleccionado
 const poblar = async () => {
-  const contenedor = document.getElementById("container");
-
   const {
     id,
     name,
@@ -226,15 +225,13 @@ const poblar = async () => {
   // Chequeamos si hubo un error en el fetch y si lo hubo mostramos una alerta
 
   if (name === null && description === null && images === null) {
-    contenedor.innerHTML = `
+    document.getElementById("container").innerHTML = `
       <div class="alert alert-danger text-center" role="alert">
         Hubo un problema, por favor intente mas tarde.
       </div>
     `;
     return;
   }
-
-  contenedor.style.marginTop = "2rem";
 
   /* Agregamos los datos a la pagina */
   document.getElementById(
@@ -255,16 +252,15 @@ const poblar = async () => {
     const element = images[i];
 
     document.getElementById("carouselImages").innerHTML += `
-    <div class="carousel-item">
-        <img src="${element}" class="d-block w-100" alt="...">
-    </div>
+      <div class="carousel-item">
+          <img src="${element}" class="d-block w-100" alt="...">
+      </div>
     `;
 
     document.getElementById("carouselIndicators").innerHTML += `
-    <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="${i}" aria-label="Slide ${
+      <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="${i}" aria-label="Slide ${
       i + 1
     }"></button>
-
     `;
   }
 
@@ -273,13 +269,14 @@ const poblar = async () => {
     const element = relatedProducts[i];
 
     document.getElementById("related").innerHTML += `    
-    <div class="card" style="width: 18rem;">
-        <img src="${element.image}" class="card-img-top" alt="imagen de ${element.name}">
-        <div class="card-body">
-            <h5 class="card-title">${element.name}</h5>
-            <a href="product-info.html" onclick="redirect(${element.id})" class="btn btn-primary">Ver Producto</a>
-        </div>
-    </div>`;
+      <div class="card" style="width: 18rem;">
+          <img src="${element.image}" class="card-img-top" alt="imagen de ${element.name}">
+          <div class="card-body">
+              <h5 class="card-title">${element.name}</h5>
+              <a href="product-info.html" onclick="redirect(${element.id})" class="btn btn-primary">Ver Producto</a>
+          </div>
+      </div>
+    `;
   }
 
   // Llamamos a la funcion para poblar los comentarios
@@ -287,9 +284,6 @@ const poblar = async () => {
   formListener();
   checkIfAlreadyOnList(id);
 };
-
-// Llamamos a la funcion de poblar
-poblar();
 
 const handleAddToCart = (id, name, costo, currency, imagen) => {
   const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
@@ -349,3 +343,8 @@ const checkIfAlreadyOnList = (id) => {
     }
   }
 };
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Llamamos a la funcion de poblar
+  poblar();
+});

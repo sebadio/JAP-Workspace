@@ -13,8 +13,8 @@ const fetchProducts = async () => {
   return { datos, products };
 };
 
-const redirectProduct = (e) => {
-  localStorage.setItem("productId", e);
+const redirectProduct = (itemID) => {
+  localStorage.setItem("productId", itemID);
   location.href = "product-info.html";
 };
 
@@ -26,6 +26,7 @@ const poblarLista = (products) => {
   // Limpiamos la lista por si tiene datos antiguos
   lista.innerHTML = "";
 
+  /* Si no hay productos, borramos los filtros y mostramos una alerta */
   if (!products || products.length === 0 || products === []) {
     lista.parentElement.previousSibling.previousSibling.previousSibling.previousSibling.innerHTML =
       "";
