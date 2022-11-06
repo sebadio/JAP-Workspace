@@ -70,9 +70,9 @@ const redirect = (user) => {
   );
   localStorage.setItem("user", user.email);
 
-  setInterval(() => {
+  /* setInterval(() => {
     location.href = "index.html";
-  }, 1500);
+  }, 1500); */
 };
 
 // Window.onload espera a que la pagina cargue para ejecutar sus instrucciones
@@ -119,6 +119,7 @@ function decodeGoogleResponse(respuesta) {
       .join("")
   );
 
+  console.log(JSON.parse(jsonPayload));
   return JSON.parse(jsonPayload);
 }
 

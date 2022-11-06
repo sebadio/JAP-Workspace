@@ -58,7 +58,7 @@ const setUser = () => {
     liItem.innerHTML = `
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <img class="img-fluid mx-1 rounded-circle" style="height: 1.2rem;" src="${
-      user.profilePicture
+      user.profilePicture ? user.profilePicture : "./img/img_perfil.png"
     }" />
     ${user.firstName ? user.firstName : userMail}
     </a>
