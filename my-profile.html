@@ -72,13 +72,169 @@
         </div>
       </div>
     </nav>
+
     <main>
       <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
-          <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+        <div class="row mt-2 d-flex align-items-center">
+          <div class="col-lg-6">
+            <h2>Perfil</h2>
+          </div>
+          <div class="col-lg-6 d-flex justify-content-end">
+            <img
+              style="height: 8rem"
+              src=""
+              alt="profileImage"
+              class="img-fluid"
+              id="profileImage"
+            />
+          </div>
         </div>
+
+        <hr />
+
+        <form action="POST" id="formulario" class="needs-validation" novalidate>
+          <div class="row mt-4">
+            <div class="col-lg-6">
+              <div>
+                <label for="firstName">Primer Nombre *</label>
+                <input
+                  placeholder="Primer nombre"
+                  class="form-control"
+                  type="text"
+                  name="firstName"
+                  id="firstName"
+                  required
+                  minlength="1"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un nombre valido
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div>
+                <label for="secondName">Segundo Nombre</label>
+                <input
+                  placeholder="Segundo nombre"
+                  class="form-control"
+                  type="text"
+                  name="secondName"
+                  id="secondName"
+                  minlength="1"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un segundo nombre valido
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-6">
+              <div>
+                <label for="firstLastName">Primer Apellido *</label>
+                <input
+                  placeholder="Primer apellido"
+                  class="form-control"
+                  type="text"
+                  name="firstLastName"
+                  id="firstLastName"
+                  required
+                  minlength="1"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un apellido valido
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div>
+                <label for="secondLastName">Segundo Apellido *</label>
+                <input
+                  placeholder="Segundo Apellido"
+                  class="form-control"
+                  type="text"
+                  name="secondLastName"
+                  id="secondLastName"
+                  required
+                  minlength="1"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un segundo apellido valido
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-6">
+              <div>
+                <label for="email">Email *</label>
+                <input
+                  placeholder="ejemplo@mail.com"
+                  class="form-control"
+                  type="email"
+                  name="email"
+                  id="email"
+                  required
+                  minlength="1"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un email valido
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div>
+                <label for="telefono">Telefono *</label>
+                <input
+                  placeholder="xxxxxxxxx"
+                  class="form-control"
+                  type="tel"
+                  name="telefono"
+                  id="telefono"
+                  required
+                  minlength="9"
+                  maxlength="9"
+                  pattern="[0-9]+"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un telefono valido
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-6">
+              <label for="fotoPerfil">Foto de perfil</label>
+              <input
+                accept="image/*"
+                class="form-control"
+                type="file"
+                name="fotoPerfil"
+                id="fotoPerfil"
+              />
+              <div class="invalid-feedback">
+                Por favor ingrese una imagen en formato JPG o PNG
+              </div>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4 d-flex justify-content-center">
+              <button class="btn btn-primary" type="submit">
+                Guardar cambios
+              </button>
+            </div>
+            <div class="col-lg-4"></div>
+          </div>
+        </form>
       </div>
     </main>
+
     <footer class="text-muted">
       <div class="container">
         <p class="float-end">

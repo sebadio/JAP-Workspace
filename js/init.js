@@ -44,6 +44,10 @@ let getJSONData = function (url) {
 
 const setUser = () => {
   if (localStorage.getItem("user")) {
+    const userMail = localStorage.getItem("user");
+
+    const user = JSON.parse(localStorage.getItem(`${userMail}`));
+
     const navbarUl = document.getElementsByClassName(
       "navbar-nav w-100 justify-content-between"
     )[0];
@@ -53,7 +57,10 @@ const setUser = () => {
 
     liItem.innerHTML = `
     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ${localStorage.getItem("user")}
+    <img class="img-fluid mx-1 rounded-circle" style="height: 1.2rem;" src="${
+      user.profilePicture
+    }" />
+    ${user.firstName ? user.firstName : userMail}
     </a>
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" href="cart.html">Mi Carrito</a></li>

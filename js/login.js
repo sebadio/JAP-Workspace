@@ -56,8 +56,19 @@ const validatePassword = (password) => {
   }
 };
 
-const redirect = (email, user = null) => {
-  localStorage.setItem("user", String(user ? user : email));
+const redirect = (user) => {
+  localStorage.setItem(
+    `${user.email}`,
+    JSON.stringify({
+      email: user.email,
+      firstName: user.firstName,
+      secondName: user.secondName,
+      firstLastName: user.firstLastName,
+      secondLastName: user.secondLastName,
+      tel: user.tel,
+    })
+  );
+  localStorage.setItem("user", user.email);
 
   setInterval(() => {
     location.href = "index.html";
@@ -82,7 +93,15 @@ window.onload = () => {
       boton.disabled = true;
       boton.innerHTML = "Redireccionando...";
 
-      redirect(emailInput.value);
+      redirect({
+        email: emailInput.value,
+        firstName: undefined,
+        secondName: undefined,
+        firstLastName: undefined,
+        secondLastName: undefined,
+        tel: undefined,
+        image: undefined,
+      });
     }
   });
 };
@@ -123,5 +142,13 @@ function handleGSignIn(respuesta) {
     </div>
   `;
 
-  redirect(data.email, data.name);
+  redirect({
+    email: data.email,
+    firstName: data.name,
+    secondName: undefined,
+    firstLastName: undefined,
+    secondLastName: undefined,
+    tel: undefined,
+    image: data.picture,
+  });
 }
