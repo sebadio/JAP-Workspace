@@ -57,7 +57,9 @@ const validatePassword = (password) => {
 };
 
 const redirect = (user) => {
-  localStorage.setItem(`${user.email}`, JSON.stringify(user));
+  if (!localStorage.getItem(user.email)) {
+    localStorage.setItem(`${user.email}`, JSON.stringify(user));
+  }
   localStorage.setItem("user", user.email);
 
   setInterval(() => {
@@ -85,12 +87,12 @@ window.onload = () => {
 
       redirect({
         email: emailInput.value,
-        firstName: undefined,
-        secondName: undefined,
-        firstLastName: undefined,
-        secondLastName: undefined,
-        tel: undefined,
-        profilePicture: undefined,
+        firstName: "",
+        secondName: "",
+        firstLastName: "",
+        secondLastName: "",
+        tel: "",
+        profilePicture: "",
       });
     }
   });
@@ -135,10 +137,10 @@ function handleGSignIn(respuesta) {
   redirect({
     email: data.email,
     firstName: data.given_name,
-    secondName: undefined,
+    secondName: "",
     firstLastName: data.family_name,
-    secondLastName: undefined,
-    tel: undefined,
+    secondLastName: "",
+    tel: "",
     profilePicture: data.picture,
   });
 }
