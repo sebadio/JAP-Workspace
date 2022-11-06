@@ -57,17 +57,7 @@ const validatePassword = (password) => {
 };
 
 const redirect = (user) => {
-  localStorage.setItem(
-    `${user.email}`,
-    JSON.stringify({
-      email: user.email,
-      firstName: user.firstName,
-      secondName: user.secondName,
-      firstLastName: user.firstLastName,
-      secondLastName: user.secondLastName,
-      tel: user.tel,
-    })
-  );
+  localStorage.setItem(`${user.email}`, JSON.stringify(user));
   localStorage.setItem("user", user.email);
 
   setInterval(() => {
