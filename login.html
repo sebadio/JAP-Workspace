@@ -37,41 +37,62 @@
               />
             </div>
 
-            <div class="row">
-              <h2 class="text-center fw-bold">Inicio de Sesion</h2>
-            </div>
+            <form
+              method="get"
+              id="loginForm"
+              class="needs-validation"
+              novalidate
+            >
+              <div class="row">
+                <h2 class="text-center fw-bold">Inicio de Sesion</h2>
+              </div>
 
-            <div class="row px-5 py-3">
-              <label class="text-center p-2" for="email"
-                >Ingrese su Email</label
-              >
-              <input
-                class="form-control"
-                placeholder="Email"
-                type="email"
-                name="email"
-                id="email"
-              />
-            </div>
+              <div class="row px-5 py-3">
+                <label class="text-start p-2" for="email"
+                  >Ingrese su Email</label
+                >
+                <input
+                  required
+                  class="form-control"
+                  placeholder="ejemplo@mail.com"
+                  type="email"
+                  name="email"
+                  id="email"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese un Email valido
+                </div>
+              </div>
 
-            <div class="row px-5 py-3">
-              <label class="text-center p-2" for="password"
-                >Ingrese su contraseña</label
-              >
-              <input
-                class="form-control"
-                placeholder="Contraseña"
-                type="password"
-                name="password"
-                id="password"
-              />
-            </div>
+              <div class="row px-5 py-3">
+                <label class="text-start p-2" for="password"
+                  >Ingrese su contraseña</label
+                >
+                <input
+                  class="form-control"
+                  placeholder="Contraseña"
+                  type="password"
+                  name="password"
+                  id="password"
+                  required
+                  minlength="3"
+                />
+                <div class="invalid-feedback">
+                  Por favor ingrese una contraseña valida
+                </div>
+              </div>
 
-            <div class="row-4 d-flex justify-content-center p-2">
-              <button class="btn btn-primary btn-lg" id="loginButton">
-                Ingresar
-              </button>
-            </div>
+              <div class="row-4 d-flex justify-content-center p-2">
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-lg"
+                  id="loginButton"
+                >
+                  Ingresar
+                </button>
+              </div>
+            </form>
+
             <hr class="border border-primary border-3 opacity-75" />
             <div
               class="row-4 d-flex justify-content-center p-2 flex-column align-items-center"
@@ -97,9 +118,6 @@
                 data-locale="es-419"
                 data-logo_alignment="left"
               ></div>
-
-              <!--               
-              <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
             </div>
           </div>
           <div class="col-lg-4"></div>
