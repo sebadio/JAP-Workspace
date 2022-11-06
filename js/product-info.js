@@ -19,7 +19,7 @@ const fetchFunction = async () => {
     if (product.ok) {
       const productData = await product.json();
       if (comentarios.ok) {
-        const comentarioData = await await comentarios.json();
+        const comentarioData = await comentarios.json();
         return {
           ...productData,
           comentarioData,
@@ -77,24 +77,17 @@ const poblarComentarios = async (comentarioData) => {
       const element = comentarioData[i];
 
       comentarios.innerHTML += `
-    
         <li class="list-group-item">
             <div class="row">
               <div class="row">
                 <div class="col-auto p-1">
                   <strong>${element.user}</strong>
                 </div>
-
                 <div class="col-auto p-1 d-sm-none d-md-block">-</div>
-
                 <div class="col-auto p-1" id="stars${i}"></div>
-
                 <div class="col-auto p-1 d-sm-none d-md-block">-</div>
-
-
                 <small class="col-auto p-1">${element.dateTime}</small>
               </div>
-
               <div class="row mt-2">
                 <p class="p-0 m-0 ms-2">${element.description}</p>
               </div>
@@ -131,6 +124,8 @@ const getDate = () => {
 
 // Funcion que crea y agrega nuestro comentario
 const comentar = () => {
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
+
   const comentarioTexto = document.getElementById("comentarioTexto").value;
   const puntuacion = Number(document.getElementById("puntuacion").value);
   const time = getDate();
@@ -164,7 +159,11 @@ const comentar = () => {
       <div class="row">
         
         <div class="col-auto p-1">
-          <strong>${localStorage.getItem("user")}</strong>
+          <strong>${
+            user.firstName
+              ? user.firstName + " " + user.firstLastName
+              : user.email
+          }</strong>
         </div>
 
         <div class="col-auto p-1 d-sm-none d-md-block">-</div>
@@ -243,126 +242,21 @@ const poblar = async () => {
 
   contenedor.style.marginTop = "2rem";
 
-  contenedor.innerHTML = `
-  <p class="m-0">Categoria / Producto</p>
-  <p>${category} > <span style="font-weight: 600;">${name}</span></p>
+  /* Agregamos los datos a la pagina */
+  document.getElementById(
+    "category"
+  ).innerHTML = `${category} > <span style="font-weight: 600;">${name}</span>`;
+  document.getElementById("firstCarouselImage").src = images[0];
+  document.getElementById("soldCount").innerHTML += soldCount;
+  document.getElementById("productName").innerHTML = name;
+  document.getElementById("currency").innerHTML = currency;
+  document.getElementById("cost").innerHTML = cost;
+  document.getElementById("addToCart").addEventListener("click", () => {
+    handleAddToCart(id, name, cost, currency, images[0]);
+  });
+  document.getElementById("description").innerHTML = description;
 
-  <div class="row">
-    <div class="col-lg-8">
-      <div id="productCarousel" class="carousel carousel-dark slide" data-bs-ride="true">
-        <div id="carouselIndicators" class="carousel-indicators">
-          <button
-            type="button"
-            data-bs-target="#productCarousel"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
-          ></button>
-        </div>
-        <div id="carouselImages" class="carousel-inner">
-          <div class="carousel-item active">
-            <img src="${images[0]}" class="d-block w-100" alt="..." />
-          </div>
-        </div>
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#productCarousel"
-          data-bs-slide="prev"
-        >
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#productCarousel"
-          data-bs-slide="next"
-        >
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-    </div>
-  
-    <div class="col-lg-4">
-      <div class="d-flex flex-column justify-content-center gap-3 border p-4 rounded h-100">
-
-        <div>
-          <p class="m-0">Vendidos: ${soldCount}</p>
-          <h2 class="fw-bold">${name}</h2>
-          <hr >
-        </div>
-
-        
-        <div class="d-flex gap-4 flex-column justify-content-between">
-          <div class="d-flex flex-column">
-          <h2>Precio:</h2>
-              <div class="d-flex align-items-center fw-bold lh-sm fs-2 font-monospace"><span>${currency}</span>&nbsp<span>${cost}</span></div>
-          </div>
-
-          <button class="btn btn-outline-dark fw-bold p-2 rounded-pill w-100" id="addToCart" onclick="handleAddToCart(${id}, '${name}', ${cost}, '${currency}', '${images[0]}')">Agregar al carrito</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="my-5 row">
-    <h4 class="fw-bold">Descripción del producto:</h4>
-    <p>${description}</p>
-  </div>
-  
-  <hr >
-
-  <div class="my-5 row">
-    <h2>Comentarios</h2>
-    <div id="comentarios" class="container">
-      <div class="spinner-border text-info" role="status">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
-  </div>
-  
-  <div class="row my-5">
-    <div class="col-lg-6">
-      <h3>Comentar</h3>
-      <div id="formComment" class="d-flex flex-column">
-        <p class="mt-3 mb-1">Tu opinión:</p>
-        <textarea
-          class="form-control"
-          name=""
-          id="comentarioTexto"
-          cols="30"
-          rows="10"
-        ></textarea>
-        <p class="mt-3 mb-1">Tu puntuación:</p>
-        <select id="puntuacion" class="form-select" style="width: min-content;" aria-label="Default select example">
-          <option selected disabled>Su puntuación</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <button disabled id="form-button" class="btn btn-primary mt-3 mb-1 disabled" style="width: min-content;" type="button" onclick="comentar()">
-          Enviar
-        </button>
-      </div>
-    </div>
-    <div class="col-lg-3"></div>
-    <div class="col-lg-3"></div>
-  </div>
-
-  <hr >
-  
-  <div class="row mt-4">
-    <h2>Productos Relacionados</h2>
-    <div class="container d-flex flex-wrap gap-4" id="related"></div>
-  </div>
-  `;
-
+  /* Agregamos las imagenes restantes al carousel */
   for (let i = 1; i < images.length; i++) {
     const element = images[i];
 
@@ -380,6 +274,7 @@ const poblar = async () => {
     `;
   }
 
+  /* Agregamos los productos relacionados */
   for (let i = 0; i < relatedProducts.length; i++) {
     const element = relatedProducts[i];
 
