@@ -70,9 +70,9 @@ const redirect = (user) => {
   );
   localStorage.setItem("user", user.email);
 
-  /* setInterval(() => {
+  setInterval(() => {
     location.href = "index.html";
-  }, 1500); */
+  }, 1500);
 };
 
 // Window.onload espera a que la pagina cargue para ejecutar sus instrucciones
@@ -119,7 +119,6 @@ function decodeGoogleResponse(respuesta) {
       .join("")
   );
 
-  console.log(JSON.parse(jsonPayload));
   return JSON.parse(jsonPayload);
 }
 
@@ -145,9 +144,9 @@ function handleGSignIn(respuesta) {
 
   redirect({
     email: data.email,
-    firstName: data.name,
+    firstName: data.given_name,
     secondName: undefined,
-    firstLastName: undefined,
+    firstLastName: data.family_name,
     secondLastName: undefined,
     tel: undefined,
     image: data.picture,
