@@ -9,8 +9,6 @@ const addTableData = async () => {
     return;
   }
 
-  addTable();
-
   addTableItems(articles);
 
   addForm();
@@ -37,26 +35,6 @@ const checkArticles = (articles) => {
     return true;
   }
   return false;
-};
-
-/* Funcion que agrega la tabla a la pagina */
-
-const addTable = () => {
-  document.getElementById("contenedor").innerHTML = `
-    <table class="table table-striped align-middle">
-    <thead>
-        <tr class="table-dark text-center">
-            <th scope="col">Imagen</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Costo</th>
-            <th scope="col">Cantidad</th>
-            <th scope="col">Subtotal</th>
-            <th scope="col">Eliminar</th>
-        </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-    </table>
-  `;
 };
 
 /* Funcion que puebla la tabla con los datos */
@@ -170,184 +148,21 @@ const handleSumTotal = () => {
 /* Funcion que agrega el formulario a la pagina */
 
 const addForm = () => {
-  document.getElementById("formulario").innerHTML = `
-          <h4>Tipo de envio</h4>
+  const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
 
-          <div>
-            <div class="form-check">
-              <input
-                type="radio"
-                data-radio="radio"
-                class="form-check-input"
-                id="premiumShipping"
-                name="optradio"
-                value="0.15"
-                checked
-              />
-              <label class="form-check-label" for="premiumShipping"
-                >Premium 2 a 5 días (15%)</label
-              >
-            </div>
-            <div class="form-check">
-              <input
-                type="radio"
-                data-radio="radio"
-                class="form-check-input"
-                id="expresShiping"
-                name="optradio"
-                value="0.07"
-              />
-              <label class="form-check-label" for="expresShiping"
-                >Express 5 a 8 días (7%)</label
-              >
-            </div>
-            <div class="form-check">
-              <input
-                type="radio"
-                data-radio="radio"
-                class="form-check-input"
-                id="standardShipping"
-                name="optradio"
-                value="0.05"
-              />
-              <label class="form-check-label" for="standardShipping"
-                >Standard 12 a 15 días (5%)</label
-              >
-            </div>
+  if (user.adress) {
+    document.getElementById("inputCalle").value = user.adress.calle;
+    document.getElementById("inputEsquina").value = user.adress.esquina;
+    document.getElementById("inputNumber").value = user.adress.numero;
+  }
 
-            <div class="invalid-feedback">Por favor seleccione una opcion</div>
-          </div>
-
-          <div class="row mt-4">
-            <h4>Dirección de envío</h4>
-            <div class="col-6">
-              <div>
-                <label class="form-check-label">Calle</label>
-                <input
-                  class="form-control"
-                  id="inputCalle"
-                  required
-                  minlength="3"
-                  type="text"
-                />
-
-                <div class="invalid-feedback">Por favor ingrese una calle valida.</div>
-              </div>
-
-              <div>
-                <label class="form-check-label mt-2">Esquina</label>
-                <input
-                  class="form-control"
-                  id="inputEsquina"
-                  required
-                  minlength="3"
-                  type="text"
-                />
-
-                <div class="invalid-feedback">Por favor ingrese una esquina valida.</div>
-              </div>
-            </div>
-            <div class="col-4">
-              <div>
-                <label class="form-check-label">Número</label>
-                <input
-                  class="form-control"
-                  id="inputNumber"
-                  required
-                  min="1"
-                  type="number"
-                />
-
-                <div class="invalid-feedback">Por favor ingrese un numero valido.</div>
-              </div>
-            </div>
-          </div>
-
-          <hr class="my-5" />
-
-          <div class="row">
-            <h4>Costos</h4>
-            <ul class="list-group">
-              <li class="list-group-item">
-                <div class="row d-flex justify-content-between">
-                  <div class="col-auto">
-                    <h5>Subtotal</h5>
-                    <p class="m-0">Suma de costos de productos</p>
-                  </div>
-
-                  <div class="col-auto d-flex align-items-center">
-                    <p
-                      class="m-0 text-wrap"
-                      style="font-family: sans-serif"
-                      id="sumTotal"
-                    ></p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="list-group-item">
-                <div class="row d-flex justify-content-between">
-                  <div class="col-auto">
-                    <h5>Costo de envio</h5>
-                    <p class="m-0">Según el tipo de envio</p>
-                  </div>
-
-                  <div class="col-auto d-flex align-items-center">
-                    <p
-                      class="m-0 text-wrap"
-                      style="font-family: sans-serif"
-                      id="shippingCost"
-                    ></p>
-                  </div>
-                </div>
-              </li>
-
-              <li class="list-group-item">
-                <div class="row d-flex justify-content-between">
-                  <div class="col-auto">
-                    <h5>Total</h5>
-                    <p class="m-0">Total en dolares</p>
-                  </div>
-
-                  <div class="col-auto d-flex align-items-center">
-                    <p
-                      class="m-0 text-wrap"
-                      style="font-family: sans-serif"
-                      id="total"
-                    ></p>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-          <hr class="my-5" />
-
-          <div class="row">
-            <h4>Forma de pago</h4>
-            <p id="metodoDePagoP">${
-              JSON.parse(localStorage.getItem(localStorage.getItem("user")))
-                .metodoPago
-                ? `<span class="text-success">Metodo de pago seleccionado: ${
-                    JSON.parse(
-                      localStorage.getItem(localStorage.getItem("user"))
-                    ).metodoPago.type
-                  }</span>`
-                : "Seleccione metodo de pago"
-            }</p>
-            <a href="#" id="formaPagoAbreModal" class="link-primary" data-bs-toggle="modal" data-bs-target="#pago">
-              Seleccionar Metodo de pago
-            </a>
-          </div>
-  
-          <div class="row mt-2">
-            <div class="col-lg-4"></div>
-            <div class="col-lg-4">  
-              <button class="btn btn-outline-dark fw-bold mt-4 w-100" type="submit">Comprar</button>
-            </div>
-            <div class="col-lg-4"></div>
-          </div>
-      `;
+  document.getElementById("metodoDePagoP").innerHTML = `
+    ${
+      user.metodoPago
+        ? `<span class="text-success">Metodo de pago seleccionado: ${user.metodoPago.type}</span>`
+        : "Seleccione metodo de pago"
+    }
+  `;
 
   document.querySelectorAll("[data-radio]").forEach((element) =>
     element.addEventListener("change", (e) => {
@@ -359,7 +174,7 @@ const addForm = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    const metodoPago = localStorage.getItem("metodoDePago");
+    const metodoPago = user.metodoPago;
     if (
       !document.getElementById("formulario").className.includes("was-validated")
     ) {
@@ -407,6 +222,14 @@ const handleSubmit = () => {
     roundedCost,
     cart,
   };
+
+  user.adress = {
+    calle,
+    numero,
+    esquina,
+  };
+
+  localStorage.setItem(user.email, JSON.stringify(user));
 
   document.getElementById("container").innerHTML = `
     <div class="row mt-4">
