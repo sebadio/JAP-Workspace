@@ -90,7 +90,7 @@ window.onload = () => {
         firstLastName: undefined,
         secondLastName: undefined,
         tel: undefined,
-        image: undefined,
+        profilePicture: undefined,
       });
     }
   });
@@ -139,6 +139,6 @@ function handleGSignIn(respuesta) {
     firstLastName: data.family_name,
     secondLastName: undefined,
     tel: undefined,
-    image: data.picture,
+    profilePicture: data.picture,
   });
 }
