@@ -8,9 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const user = JSON.parse(localStorage.getItem(userName));
 
   /* Checkeamos si el usuario tiene una imagen o si tenemos que colocar la imagen default */
-  document.getElementById("profileImage").src = user.profilePicture
-    ? user.profilePicture
-    : "./img/img_perfil.png";
+  document.getElementById("profileImage").src =
+    user.profilePicture !== "" ? user.profilePicture : "./img/img_perfil.png";
 
   /* Actualizamos la imagen cada vez que cambia */
   document.getElementById("fotoPerfil").addEventListener("change", () => {
