@@ -63,7 +63,7 @@
         <p class="lead">Verás aquí todas las categorías del sitio.</p>
       </div>
       <div class="container">
-        <div class="row">
+        <!-- <div class="row">
           <div class="col text-end">
             <div
               class="btn-group btn-group-toggle mb-4"
@@ -95,7 +95,7 @@
               ></label>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="row">
           <div
             class="col-lg-6 d-flex justify-content-center align-items-center"
@@ -109,11 +109,13 @@
               id="searchInput"
             />
           </div>
-          <div class="row col-lg-6 container p-0 m-0 w-50">
-            <div class="col">
+          <div
+            class="row col-lg-6 col-sm-12 container p-0 m-0 d-flex align-items-center"
+          >
+            <div class="col-auto">
               <p class="font-weight-normal text-end my-2">Cant.</p>
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 pb-2">
               <input
                 class="form-control"
                 type="number"
@@ -121,7 +123,7 @@
                 id="rangeFilterCountMin"
               />
             </div>
-            <div class="col-lg-2">
+            <div class="col-lg-2 pb-2">
               <input
                 class="form-control"
                 type="number"
@@ -129,7 +131,7 @@
                 id="rangeFilterCountMax"
               />
             </div>
-            <div class="col-lg-3 p-0">
+            <div class="col-lg-3 pb-2 p-0">
               <div class="btn-group" role="group">
                 <button class="btn btn-light btn-block" id="rangeFilterCount">
                   Filtrar
@@ -137,6 +139,35 @@
                 <button class="btn btn-link btn-sm" id="clearRangeFilter">
                   Limpiar
                 </button>
+              </div>
+            </div>
+
+            <div class="col-auto pb-2 text-end">
+              <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortAsc"
+                />
+                <label class="btn btn-light" for="sortAsc">A-Z</label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortDesc"
+                />
+                <label class="btn btn-light" for="sortDesc">Z-A</label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortByCount"
+                  checked
+                />
+                <label class="btn btn-light" for="sortByCount"
+                  ><i class="fas fa-sort-amount-down mr-1"></i
+                ></label>
               </div>
             </div>
           </div>
