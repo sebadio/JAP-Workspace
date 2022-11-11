@@ -63,50 +63,7 @@
     >
       <div id="title" class="text-center p-4"></div>
       <div class="container">
-        <div class="row">
-          <div class="col text-end">
-            <div
-              class="btn-group btn-group-toggle mb-4"
-              data-bs-toggle="buttons"
-            >
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortAsc"
-              />
-              <label class="btn btn-light" for="sortAsc">A-Z</label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortDesc"
-              />
-              <label class="btn btn-light" for="sortDesc">Z-A</label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortByCount"
-                checked
-              />
-              <label class="btn btn-light" id="sortValue" for="sortByCount"
-                ><i class="fas fa-sort-amount-down mr-1"></i> $</label
-              >
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortByRel"
-                checked
-              />
-              <label class="btn btn-light" id="sortRel" for="sortByRel"
-                ><i class="fas fa-sort-amount-down mr-1"></i> Rel</label
-              >
-            </div>
-          </div>
-        </div>
-        <div class="row">
+        <div class="row d-flex align-items-center">
           <div
             class="col-lg-4 d-flex justify-content-center align-items-center"
           >
@@ -120,13 +77,12 @@
             />
           </div>
 
-          <div class="col-lg-2"></div>
-
-          <div class="row col-lg-6 gap-1 container p-0 m-0 w-50">
-            <div class="col-lg-1">
+          <div class="row col-lg-8">
+            <div class="col-auto">
               <p class="font-weight-normal my-2">Cant.</p>
             </div>
-            <div class="col-lg-3">
+
+            <div class="col-lg-2">
               <input
                 class="form-control"
                 type="number"
@@ -134,7 +90,8 @@
                 id="rangeFilterCountMin"
               />
             </div>
-            <div class="col-lg-3">
+
+            <div class="col-lg-2">
               <input
                 class="form-control"
                 type="number"
@@ -142,7 +99,8 @@
                 id="rangeFilterCountMax"
               />
             </div>
-            <div class="col-lg-4 p-0">
+
+            <div class="col-lg-auto p-0">
               <div class="btn-group" role="group">
                 <button class="btn btn-light btn-block" id="rangeFilterCount">
                   Filtrar
@@ -150,6 +108,45 @@
                 <button class="btn btn-link btn-sm" id="clearRangeFilter">
                   Limpiar
                 </button>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div class="btn-group btn-group-toggle" data-bs-toggle="buttons">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortAsc"
+                />
+                <label class="btn btn-light" for="sortAsc">A-Z</label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortDesc"
+                />
+                <label class="btn btn-light" for="sortDesc">Z-A</label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortByCount"
+                  checked
+                />
+                <label class="btn btn-light" id="sortValue" for="sortByCount"
+                  ><i class="fas fa-sort-amount-down mr-1"></i> $</label
+                >
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="options"
+                  id="sortByRel"
+                  checked
+                />
+                <label class="btn btn-light" id="sortRel" for="sortByRel"
+                  ><i class="fas fa-sort-amount-down mr-1"></i> Rel</label
+                >
               </div>
             </div>
           </div>
