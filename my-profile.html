@@ -96,9 +96,11 @@
           <div class="row mt-4">
             <div class="col-lg-6">
               <div>
-                <label for="firstName"
-                  >Primer Nombre <span class="text-danger fs-4">*</span></label
-                >
+                <label
+                  for="firstName"
+                  class="d-flex align-items-center gap-1 asterisco"
+                  >Primer Nombre <small class="text-danger"></small
+                ></label>
                 <input
                   placeholder="Primer nombre"
                   class="form-control"
@@ -134,10 +136,11 @@
           <div class="row mt-4">
             <div class="col-lg-6">
               <div>
-                <label for="firstLastName"
-                  >Primer Apellido
-                  <span class="text-danger fs-4">*</span></label
-                >
+                <label
+                  for="firstLastName"
+                  class="d-flex align-items-center gap-1 asterisco"
+                  >Primer Apellido <small class="text-danger"></small
+                ></label>
                 <input
                   placeholder="Primer apellido"
                   class="form-control"
@@ -173,9 +176,11 @@
           <div class="row mt-4">
             <div class="col-lg-6">
               <div>
-                <label for="email"
-                  >Email <span class="text-danger fs-4">*</span></label
-                >
+                <label
+                  for="email"
+                  class="d-flex align-items-center gap-1 asterisco"
+                  >Email <small class="text-danger"></small
+                ></label>
                 <input
                   placeholder="ejemplo@mail.com"
                   class="form-control"
@@ -215,8 +220,8 @@
             <div class="col-lg-6">
               <label for="fotoPerfil">Foto de perfil</label>
               <input
+                class="d-flex align-items-center gap-1 form-control"
                 accept="image/*"
-                class="form-control"
                 type="file"
                 name="fotoPerfil"
                 id="fotoPerfil"

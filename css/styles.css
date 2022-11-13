@@ -206,3 +206,17 @@ a.custom-card:hover {
   align-items: center;
   transition: all 100ms ease-in-out;
 }
+
+.asterisco {
+  position: relative;
+  width: max-content;
+}
+
+.asterisco::after {
+  content: "*";
+  position: absolute;
+  right: -1rem;
+  top: -0.5rem;
+  color: #dc3545;
+  font-size: 2rem;
+}
