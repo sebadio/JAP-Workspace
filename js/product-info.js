@@ -230,6 +230,7 @@ const poblar = async () => {
         Hubo un problema, por favor intente mas tarde.
       </div>
     `;
+    removeSpinner();
     return;
   }
 
