@@ -173,6 +173,7 @@ const addFormData = () => {
     e.preventDefault();
     e.stopPropagation();
 
+    const user = JSON.parse(localStorage.getItem(localStorage.getItem("user")));
     const metodoPago = user.metodoPago;
     if (
       !document.getElementById("formulario").className.includes("was-validated")
