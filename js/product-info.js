@@ -283,6 +283,7 @@ const poblar = async () => {
   poblarComentarios(comentarioData);
   formListener();
   checkIfAlreadyOnList(id);
+  removeSpinner();
 };
 
 const handleAddToCart = (id, name, costo, currency, imagen) => {
@@ -342,6 +343,15 @@ const checkIfAlreadyOnList = (id) => {
         "Articulo ya esta en el carrito";
     }
   }
+};
+
+const removeSpinner = () => {
+  const loadingScreen = document.getElementById("waitingForLoad");
+  loadingScreen.style.opacity = "0";
+
+  setTimeout(() => {
+    loadingScreen.parentElement.removeChild(loadingScreen);
+  }, 100);
 };
 
 document.addEventListener("DOMContentLoaded", () => {
