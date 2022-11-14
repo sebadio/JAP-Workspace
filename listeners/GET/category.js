@@ -1,3 +1,4 @@
+/* Importamos el file system */
 import fs from "fs";
 
 /* Nos devuelve el json entero con todas las categorias */
