@@ -16,8 +16,15 @@ const handleCartBuy = (app) => {
         return;
       }
 
-      /* Retornamos el mensaje de exito */
-      res.status(200).send("Compra realizada con exito");
+      fs.readFile(`./api/cart/buy.json`, { encoding: "utf-8" }, (err, data) => {
+        if (err) {
+          /* Si hay un error se lo hacemos saber al usuario */
+          res.status(501).send("Ocurrio un error");
+          return;
+        }
+
+        res.status(200).send(JSON.parse(data));
+      });
     });
   });
 };
