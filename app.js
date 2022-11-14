@@ -1,134 +1,45 @@
-import fs from "fs";
+/* Importamos express y las funciones de escucha */
 import express from "express";
 
+/* Importamos las funciones del GET */
+import {
+  getAllCategories,
+  getSingleCategory,
+  getCategoryProducts,
+} from "./listeners/GET/category.js";
+import { getProducts, getProductComments } from "./listeners/GET/products.js";
+import getUserCart from "./listeners/GET/cart.js";
+
+/* Importamos las funciones del POST */
+import handleCartBuy from "./listeners/POST/handleCartBuy.js";
+
+/* Puerto en el que se va a servir la aplicacion */
 const puerto = 3030;
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 /* Categorias */
-
-/* Nos devuelve el json entero con todas las categorias */
-app.get("/cat/", (req, res) => {
-  fs.readFile(`./api/cats/cat.json`, { encoding: "utf-8" }, (err, data) => {
-    if (err) {
-      console.log(`Error: ${err}`);
-      res.status(500).send(`Hubo un error por favor intentelo mas tarde`);
-      return;
-    }
-
-    const categories = JSON.parse(data);
-    res.status(200).send(categories);
-  });
-});
-
-/* Nos devuelve solo el json que le solicitemos */
-app.get("/cat/:id", (req, res) => {
-  const { id } = req.params;
-
-  fs.readFile(`./api/cats/cat.json`, { encoding: "utf-8" }, (err, data) => {
-    if (err) {
-      console.log(`Error: ${err}`);
-      res.status(500).send(`Hubo un error por favor intentelo mas tarde`);
-      return;
-    }
-
-    const categories = JSON.parse(data);
-
-    for (let i = 0; i < categories.length; i++) {
-      const element = categories[i];
-      if (parseInt(element.id) === parseInt(id)) {
-        res.status(200).send(element);
-        return;
-      }
-    }
-
-    res.status(500).send(`No existe la categoria con el id: ${id}`);
-  });
-});
+getAllCategories(app); /* Nos devuelve todas las categorias */
+getSingleCategory(app); /* Nos devuelve solo la categoria solicitada */
 
 /* cats_products */
-app.get("/catsProducts/:id", (req, res) => {
-  const { id } = req.params;
-
-  fs.readFile(
-    `./api/cats_products/${id}.json`,
-    { encoding: "utf-8" },
-    (err, data) => {
-      if (err) {
-        console.log(`Error: ${err}`);
-        res.status(500).send(`Hubo un error por favor intentelo mas tarde`);
-        return;
-      }
-
-      res.status(200).send(JSON.parse(data));
-    }
-  );
-});
+getCategoryProducts(app); /*Devuelve los productos de la categoria solicitada*/
 
 /* Products */
-app.get("/products/:id", (req, res) => {
-  const { id } = req.params;
-
-  fs.readFile(
-    `./api/products/${id}.json`,
-    { encoding: "utf-8" },
-    (err, data) => {
-      if (err) {
-        console.log(`Error: ${err}`);
-        res.status(500).send(`Hubo un error por favor intentelo mas tarde`);
-        return;
-      }
-
-      res.status(200).send(JSON.parse(data));
-    }
-  );
-});
+getProducts(app); /* Devuelve el producto solicitado */
 
 /* Product Comments */
-app.get("/productsComments/:id", (req, res) => {
-  const { id } = req.params;
-
-  fs.readFile(
-    `./api/products_comments/${id}.json`,
-    { encoding: "utf-8" },
-    (err, data) => {
-      if (err) {
-        console.log(`Error: ${err}`);
-        res.status(500).send(`Hubo un error por favor intentelo mas tarde`);
-        return;
-      }
-
-      res.status(200).send(JSON.parse(data));
-    }
-  );
-});
+getProductComments(app); /* Devuelve los comentarios del producto solicitado */
 
 /* Cart */
-app.get("/cart/:id", (req, res) => {
-  const { id } = req.params;
-
-  fs.readFile(
-    `./api/user_cart/${id}.json`,
-    { encoding: "utf-8" },
-    (err, data) => {
-      if (err) {
-        console.log(`Error: ${err}`);
-        res.status(500).send(`Hubo un error por favor intentelo mas tarde`);
-        return;
-      }
-
-      res.status(200).send(JSON.parse(data));
-    }
-  );
-});
+getUserCart(app); /* Devuelve el carrito del usuario */
 
 /* Compra carrito */
+handleCartBuy(app); /* Guarda la compra en orders/*.json */
 
-app.post("/cart", (req, res) => {
-  console.log(req.body);
-  res.send(200);
-});
-
+/* Enciende el servidor en el puerto designado arriba, sino hay uno designado predetermina a 3000 */
 app.listen(puerto || 3000, () => {
   console.log(`Server iniciado en el puerto ${puerto}`);
 });
