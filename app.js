@@ -1,5 +1,6 @@
 /* Importamos express y las funciones de escucha */
 import express from "express";
+import cors from "cors";
 
 /* Importamos las funciones del GET */
 import {
@@ -12,11 +13,13 @@ import getUserCart from "./listeners/GET/cart.js";
 
 /* Importamos las funciones del POST */
 import handleCartBuy from "./listeners/POST/handleCartBuy.js";
+import publish from "./listeners/GET/publish.js";
 
 /* Puerto en el que se va a servir la aplicacion */
 const puerto = 3030;
 
 const app = express();
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -38,6 +41,9 @@ getUserCart(app); /* Devuelve el carrito del usuario */
 
 /* Compra carrito */
 handleCartBuy(app); /* Guarda la compra en orders/*.json */
+
+/* Publish */
+publish(app);
 
 /* Enciende el servidor en el puerto designado arriba, sino hay uno designado predetermina a 3000 */
 app.listen(puerto || 3000, () => {
