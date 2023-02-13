@@ -39,9 +39,10 @@ const poblarLista = (products) => {
     `;
   }
 
+  let listaHTML = "";
   // Poblamos la lista con los productos y sus respectivas clases de Bootstrap
   products.map((producto) => {
-    lista.innerHTML += `
+    listaHTML += `
       <li class="list-group-item list-group-item-action cursor-active" onclick="redirectProduct(${producto.id})">
         <div class="row p-2">
           <div class="col-lg-3 p-1">
@@ -58,6 +59,7 @@ const poblarLista = (products) => {
         </div>
       </li>`;
   });
+  lista.innerHTML = listaHTML;
 };
 
 // Inicializamos la variable desc para modificarla si es necesario
