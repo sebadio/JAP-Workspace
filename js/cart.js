@@ -46,11 +46,11 @@ const addTableItems = (articles) => {
   const tableBody = document.getElementById("tableBody");
 
   tableBody.innerHTML = "";
-
+  let tableHTML = "";
   for (const key in articles) {
     const { id, imagen, name, costo, count, currency } = articles[key];
 
-    tableBody.innerHTML += `
+    tableHTML += `
     <tr class="text-center">
         <td class="w-25"><img class="img-fluid w-50 rounded" src="${imagen}"></td>
         <td class="fw-bold">${name}</td>
@@ -63,6 +63,8 @@ const addTableItems = (articles) => {
     </tr>
     `;
   }
+
+  tableBody.innerHTML = tableHTML;
 };
 
 /* Funcion que usamos para remover un item de el carrito */
